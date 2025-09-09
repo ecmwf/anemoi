@@ -20,7 +20,7 @@ jobs:
       - name: Check for recent commits on main in anemoi repos
         id: check-commits
         run: |
-          REPOS=("anemoi-core" "anemoi-datasets" "anemoi-docs")
+          REPOS=("anemoi-core" "anemoi-datasets" "anemoi")
           SHOULD_RUN=false
 
           for REPO in "${REPOS[@]}"; do

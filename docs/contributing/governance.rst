@@ -40,10 +40,10 @@ Anemoi is an open-source machine learning framework co-developed by a
 number of national meteorological institutions in collaboration with
 ECMWF. Details about individual contributors can be found in the
 `CONTRIBUTORS.md
-<https://github.com/ecmwf/anemoi-docs/blob/main/CONTRIBUTORS.md>`_ file
-in each package. Inspired by the governance structures of other
-open-source projects such as PyTorch and TensorFlow, **Anemoi is guided
-by the Anemoi Technical Subgroup (ATS)**, a committee composed of
+<https://github.com/ecmwf/anemoi/blob/main/CONTRIBUTORS.md>`_ file in
+each package. Inspired by the governance structures of other open-source
+projects such as PyTorch and TensorFlow, **Anemoi is guided by the
+Anemoi Technical Subgroup (ATS)**, a committee composed of
 representatives from each contributing institution. The ATS meets weekly
 in what is known as the ATS meeting, which serves as a forum to
 coordinate the project's technical direction. During these meetings, we
