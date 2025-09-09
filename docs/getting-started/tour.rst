@@ -44,4 +44,4 @@ e.g. building a new dataset to train a model using new data. See the
 We would love to make Anemoi even easier for everyone to use. If there
 are any use-cases you would like to see covered in the future, please
 consider contacting the developers or creating a pull request to the
-`anemoi-docs repository <https://github.com/ecmwf/anemoi-docs>`_.
+`anemoi` repository <https://github.com/ecmwf/anemoi>`_.

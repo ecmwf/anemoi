@@ -34,4 +34,4 @@ ecflow_variables:
 
 anemoi_datasets_branch: "main"  # Branch for anemoi-datasets
 anemoi_training_branch: "main"  # Branch for anemoi-training
-anemoi_docs_branch: "main"  # Branch for anemoi-docs to be used to deploy the anemoi_tests suite
+anemoi_branch: "main"  # Branch for the anemoi repo to be used to deploy the anemoi_tests suite

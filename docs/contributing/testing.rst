@@ -38,8 +38,8 @@ System-level Tests
 -  Test the anemoi packages as a whole, including end-to-end workflows,
    from dataset creation to model training and inference.
 -  These tests ensure that the packages work together as expected.
--  The system-level test suite is located in the `anemoi-docs`
-   repository in the `tests/system-level` directory.
+-  The system-level test suite is located in the `anemoi` repository in
+   the `tests/system-level` directory.
 
 ***************
  Running Tests
@@ -100,8 +100,8 @@ docs for more information.
 
    <br><br>
 
-To run **system-level tests**, navigate to the `anemoi-docs` repository
-on github and trigger the workflow `on-demand-system-level-test` via the
+To run **system-level tests**, navigate to the `anemoi` repository on
+github and trigger the workflow `on-demand-system-level-test` via the
 GitHub Actions tab.
 
 .. note::
@@ -272,8 +272,8 @@ package-level documentation.
 ***************************************************
 
 To add a test case in the system-level test suite, you need to add
-config files in the relevant directory in the `anemoi-docs` repository.
-The config files should be placed in the `tests/system-level/configs`
+config files in the relevant directory in the `anemoi` repository. The
+config files should be placed in the `tests/system-level/configs`
 directory as explained below. They will constitute tasks in the
 system-level test suite. No pyflow knowledge is required to add new test
 cases.
@@ -297,7 +297,7 @@ In the folder add
    the `dataset_config.yaml` file) will be set in the suite.
 
 If you need additional flexibility in configuring your test case, please
-open an issue in the `anemoi-docs` repository.
+open an issue in the `anemoi` repository.
 
 Model Training Test cases
 =========================
