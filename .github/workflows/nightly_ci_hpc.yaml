@@ -2,7 +2,7 @@ name: nightly-system-level-test
 
 on:
   schedule:
-    - cron: '0 23 * * 0' # Nightly at 23pm on all main branches
+    - cron: '0 23 * * *' # Nightly at 23pm on all main branches
   # pull_request:
   #   types: [opened, synchronize, reopened]
   #   branches:
