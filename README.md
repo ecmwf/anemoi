@@ -67,7 +67,7 @@ Installation
 To install the Anemoi framework, clone the repository and install the required dependencies (e.g. for anemoi-transform) :
 
     $ git clone https://github.com/ecmwf/anemoi-transform.git
-$ cd anemoi-transform
+    $ cd anemoi-transform
     $ pip install -e
 
 Or one can also install each of the packages directly from PyPI
@@ -80,34 +80,36 @@ For detailed installation instructions and environment setup, refer to the [Inst
 Contributing
 ------------
 
-## Contributing
-
 We welcome contributions to the Anemoi framework! If you’d like to get involved, please follow the [Contributing Guide](https://anemoi.readthedocs.io/projects/training/en/stable/dev/contributing.html#), which outlines the full development workflow — from setting up your environment, to branching and committing, to opening pull requests and going through review. We encourage opening issues as way to discuss any ideas or new features as a first-step!
 
 If you’re new to Anemoi, we recommend starting with the [Getting Started Tour](https://anemoi.readthedocs.io/en/latest/getting-started/tour.html) for a quick overview of the framework before diving into development.
 
 
-## Roadmap
+Roadmap
+-------
 
 The development of the Anemoi framework follows a structured roadmap to ensure continuous improvement and feature development.
 For a detailed view of planned milestones, priorities, and upcoming features, see the [Development Roadmap](https://anemoi.readthedocs.io/en/latest/contributing/roadmap.html#development-roadmap).
 
 
-## Community
+Community
+---------
 
 The Anemoi framework fosters an open and collaborative community. Governance is guided by clear principles to ensure transparency and inclusiveness, described in the [Governance Documentation](https://anemoi.readthedocs.io/en/latest/contributing/governance.html).
 
 
 Community members are encouraged to participate in regular interactions such as the [Anemoi Community Meetings](https://anemoi.readthedocs.io/en/latest/contributing/roadmap.html#anemoi-community-meeting), where updates, discussions take place.
 
-## License
+License
+-------
 
 Anemoi is licensed under the Apache License 2.0.
 See the [LICENSE](https://github.com/ecmwf/anemoi-core/blob/main/LICENSE) file for more details.
 
 For more information, visit the [Anemoi Documentation](https://anemoi.readthedocs.io/en/latest/).
 
-## Other resources & References
+Other resources & References
+----------------------------
 
 Additional resources for using and understanding Anemoi:
 
