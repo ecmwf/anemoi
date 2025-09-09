@@ -18,14 +18,14 @@ Additionally, it contains the [Anemoi Documentation](https://anemoi.readthedocs.
 
 Anemoi offers a modular architecture composed of several packages, each targeting different components necessary for constructing data-driven weather models:
 
-- **[anemoi-datasets] (https://github.com/ecmwf/anemoi-datasets)**: Tools for handling and preprocessing meteorological datasets.
-- **[anemoi-graphs] (https://github.com/ecmwf/anemoi-core/tree/main/graphs)**: Utilities for constructing graph representations of meteorological data.
-- **[anemoi-models] (https://github.com/ecmwf/anemoi-core/tree/main/models)**: Core components for defining and training ML models, including graph neural networks (GNNs) and graph transformers.
-- **[anemoi-training] (https://github.com/ecmwf/anemoi-core/tree/main/training)**: Framework for training ML models, including support for distributed training.
-- **[anemoi-inference] (https://github.com/ecmwf/anemoi-inference)**: Tools for deploying trained models and performing inference.
-- **[anemoi-transform] (https://github.com/ecmwf/anemoi-transform)**: Utilities for data transformation and augmentation.
-- **[anemoi-utils] (https://github.com/ecmwf/anemoi-utils)**: Miscellaneous utility functions.
-- **[anemoi-registry] (https://github.com/ecmwf/anemoi-registry)**: Centralized registry for storing and accessing model configurations and metadata.
+- **[anemoi-datasets](https://github.com/ecmwf/anemoi-datasets)**: Tools for handling and preprocessing meteorological datasets.
+- **[anemoi-graphs](https://github.com/ecmwf/anemoi-core/tree/main/graphs)**: Utilities for constructing graph representations of meteorological data.
+- **[anemoi-models](https://github.com/ecmwf/anemoi-core/tree/main/models)**: Core components for defining and training ML models, including graph neural networks (GNNs) and graph transformers.
+- **[anemoi-training](https://github.com/ecmwf/anemoi-core/tree/main/training)**: Framework for training ML models, including support for distributed training.
+- **[anemoi-inference](https://github.com/ecmwf/anemoi-inference)**: Tools for deploying trained models and performing inference.
+- **[anemoi-transform](https://github.com/ecmwf/anemoi-transform)**: Utilities for data transformation and augmentation.
+- **[anemoi-utils](https://github.com/ecmwf/anemoi-utils)**: Miscellaneous utility functions.
+- **[anemoi-registry](https://github.com/ecmwf/anemoi-registry)**: Centralized registry for storing and accessing model configurations and metadata.
 
 Each package collects metadata that can be used by subsequent packages, facilitating a seamless workflow from data ingestion to operational model deployment.
 
@@ -80,35 +80,11 @@ For detailed installation instructions and environment setup, refer to the [Inst
 Contributing
 ------------
 
-We welcome contributions to the Anemoi framework. To get started:
+## Contributing
 
-1. Fork the anemoi repository on GitHub to your personal/organisation
-   account. See the
-[GitHub tutorial](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+We welcome contributions to the Anemoi framework! If you’d like to get involved, please follow the [Contributing Guide](https://anemoi.readthedocs.io/projects/training/en/stable/dev/contributing.html#), which outlines the full development workflow — from setting up your environment, to branching and committing, to opening pull requests and going through review. We encourage opening issues as way to discuss any ideas or new features as a first-step!
 
-2. Set up the development environment following the instructions in the
-[Development set-up section](https://anemoi.readthedocs.io/en/latest/contributing/environment.html#setting-up-the-development-environment).
-
-3. Create a new branch for your developments, following the
-[Branching Guidelines](https://anemoi.readthedocs.io/en/latest/contributing/guidelines.html#branching-guidelines).
-
-4. Make your changes and ensure that your changes adhere to the
-[Development Guidelines](https://anemoi.readthedocs.io/en/latest/contributing/guidelines.html#development-guidelines).
-
-5. Commit your changes and push your branch to your fork on GitHub.
-
-6. Open a Pull Request against the `main` branch of the original
-   repository, set a PR title according to the
-[PR Title Guidelines](https://anemoi.readthedocs.io/en/latest/contributing/guidelines.html#pr-title-guidelines)
-
-7. Sign the Contributor License Agreement (CLA) on GitHub. If you
-   haven't yet signed the CLA for the repository, you will be prompted
-   to do so in a comment on your pull request.
-
-8. Request a review from maintainers or other contributors, which will
-[Code Review Process](https://anemoi.readthedocs.io/en/latest/contributing/contributing.html#code-review-process).
-
-For detailed contributing guidelines, refer to the [Contributing Guide](https://anemoi.readthedocs.io/en/latest/contributing/).
+If you’re new to Anemoi, we recommend starting with the [Getting Started Tour](https://anemoi.readthedocs.io/en/latest/getting-started/tour.html) for a quick overview of the framework before diving into development.
 
 
 ## Roadmap
