@@ -64,7 +64,7 @@ Features
 Installation
 ------------
 
-To install the Anemoi framework, clone the repository and install the required dependencies::
+To install the Anemoi framework, clone the repository and install the required dependencies (e.g. for anemoi-transform) :
 
     $ git clone https://github.com/ecmwf/anemoi-transform.git
 $ cd anemoi-transform
