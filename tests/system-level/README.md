@@ -24,14 +24,14 @@ This directory is used to store the suite's outputs and to build the virtual env
 
 ### Testing Configuration Changes
 
-If you modify configuration files in `anemoi_test/configs`, you need to point to a committed branch of `anemoi-docs` so that the deployed suite can pull your config files from that branch.
+If you modify configuration files in `anemoi_test/configs`, you need to point to a committed branch of the `anemoi` repo so that the deployed suite can pull your config files from that branch.
 
 - Commit your changes to a branch.
-- Push the branch to anemoi-docs.
+- Push the branch to anemoi.
 - Run the build script pointing to that branch:
 
 ```
-./build.sh -s OUTPUT_ROOT_SUITE=$SCRATCH/workdir anemoi_docs_branch=name-of-your-branch
+./build.sh -s OUTPUT_ROOT_SUITE=$SCRATCH/workdir anemoi_branch=name-of-your-branch
 ```
 
 ### Additional Build Options

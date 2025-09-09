@@ -43,7 +43,7 @@ runs:
           module load wellies
 
           # Clone the repository
-          PACKAGE_NAME=anemoi-docs
+          PACKAGE_NAME=anemoi
           PACKAGE_BRANCH=${{ github.head_ref || github.ref_name }}
           git clone -b $PACKAGE_BRANCH https://${{ inputs.github_token }}@github.com/ecmwf/${PACKAGE_NAME}.git
           cd $PACKAGE_NAME
