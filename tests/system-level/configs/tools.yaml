@@ -19,24 +19,36 @@ tools:
       type: git
       source: https://github.com/ecmwf/anemoi-datasets.git
       branch: "{anemoi_datasets_branch}"
-      depends: [uv, UV_CACHE_DIR]
-      post_script: "uv pip install --upgrade pip && uv pip install -e ."
-    anemoi_training:
+      depends: [uv, UV_CACHE_DIR, anemoi_utils, anemoi_transform]
+      post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ."
+    anemoi_core:
       type: git
       source: https://github.com/ecmwf/anemoi-core.git
-      branch: "{anemoi_training_branch}"
+      branch: "{anemoi_core_branch}"
+      depends: [uv, UV_CACHE_DIR, anemoi_utils, anemoi_transform, anemoi_datasets]
+      post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ./training[all,tests] -e ./graphs[all,tests] -e ./models[all,tests]"
+    anemoi_transform:
+      type: git
+      source: https://github.com/ecmwf/anemoi-transform.git
+      branch: "{anemoi_transform_branch}"
       depends: [uv, UV_CACHE_DIR]
-      post_script: "git fetch --unshallow && uv pip install --upgrade pip && uv pip install -e ./training[all,tests] -e ./graphs[all,tests] -e ./models[all,tests]"
+      post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ."
+    anemoi_utils:
+      type: git
+      source: https://github.com/ecmwf/anemoi-utils.git
+      branch: "{anemoi_utils_branch}"
+      depends: [uv, UV_CACHE_DIR]
+      post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ."
 
   # --------Virtual envs --------------------------------------------------
   environments:
       datasets_env:
         type: venv
-        packages: [anemoi_datasets]
+        packages: [anemoi_datasets, anemoi_utils, anemoi_transform]
         depends: [python]
       training_env:
         type: venv
-        packages: [anemoi_training]
+        packages: [anemoi_core, anemoi_utils, anemoi_transform, anemoi_datasets]
         depends: [python]
 
   # --------Environment variables -----------------------------------------

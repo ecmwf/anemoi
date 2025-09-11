@@ -4,11 +4,19 @@ on:
   workflow_dispatch:
     inputs:
       anemoi_datasets_branch:
-        description: Branch for anemoi-datasets to be used to build the datasets environment for testing.
+        description: Branch of anemoi-datasets to use in system-level tests
         required: false
         default: "main"
-      anemoi_training_branch:
-        description: Branch for anemoi-training to be used to build the training environment for testing.
+      anemoi_core_branch:
+        description: Branch of anemoi-core to use in system-level tests
+        required: false
+        default: "main"
+      anemoi_transform_branch:
+        description: Branch of anemoi-transform to use in system-level tests
+        required: false
+        default: "main"
+      anemoi_utils_branch:
+        description: Branch of anemoi-utils to use in system-level tests
         required: false
         default: "main"
 
@@ -30,9 +38,11 @@ jobs:
         run: |
           anemoi_branch="${{ github.ref_name }}"
           datasets_branch="${{ github.event.inputs.anemoi_datasets_branch }}"
-          training_branch="${{ github.event.inputs.anemoi_training_branch }}"
+          core_branch="${{ github.event.inputs.anemoi_core_branch }}"
+          transform_branch="${{ github.event.inputs.anemoi_transform_branch }}"
+          utils_branch="${{ github.event.inputs.anemoi_utils_branch }}"
 
-          build_options="anemoi_branch=$anemoi_branch anemoi_datasets_branch=$datasets_branch anemoi_training_branch=$training_branch"
+          build_options="anemoi_branch=$anemoi_branch anemoi_datasets_branch=$datasets_branch anemoi_core_branch=$core_branch anemoi_transform_branch=$transform_branch anemoi_utils_branch=$utils_branch"
           echo "build_options=$build_options" >> "$GITHUB_OUTPUT"
 
   system_level_test:
