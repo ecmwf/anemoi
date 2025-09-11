@@ -14,6 +14,7 @@ tools:
       name: uv
       version: 0.6.14
 
+# ---------- Anemoi packages ---------------------------------------------------
   packages:
     anemoi_datasets:
       type: git
@@ -31,7 +32,7 @@ tools:
       type: git
       source: https://github.com/ecmwf/anemoi-transform.git
       branch: "{anemoi_transform_branch}"
-      depends: [uv, UV_CACHE_DIR]
+      depends: [uv, UV_CACHE_DIR, anemoi_utils]
       post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ."
     anemoi_utils:
       type: git
