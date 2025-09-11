@@ -33,5 +33,7 @@ ecflow_variables:
   RESULTS_DIR: "%OUTPUT_ROOT%/results"
 
 anemoi_datasets_branch: "main"  # Branch for anemoi-datasets
-anemoi_training_branch: "main"  # Branch for anemoi-training
+anemoi_core_branch: "main"  # Branch for anemoi-core
+anemoi_transform_branch: "main"  # Branch for anemoi-transform
+anemoi_utils_branch: "main"  # Branch for anemoi-utils
 anemoi_branch: "main"  # Branch for the anemoi repo to be used to deploy the anemoi_tests suite
