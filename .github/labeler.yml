@@ -1,0 +1,43 @@
+# This is the configuration file for the labeler action.
+# It assigns labels to pull requests based on the files changed in the PR.
+# See more here: https://github.com/actions/labeler
+dependencies:
+- changed-files:
+  - any-glob-to-any-file:
+    - "**/requirements.txt"
+    - "**/setup.py"
+    - "**/pyproject.toml"
+    - "**/Pipfile"
+    - "**/Pipfile.lock"
+    - "**/requirements/*.txt"
+    - "**/requirements/*.in"
+
+documentation:
+- changed-files:
+  - any-glob-to-any-file:
+    - "**/docs/**/*"
+    - "*.md"
+    - "*.rst"
+
+config:
+- changed-files:
+  - any-glob-to-any-file:
+    - "**/src/**/config/**/*"
+    - "**/src/anemoi/inference/config.py"
+
+CI/CD:
+- changed-files:
+  - any-glob-to-any-file:
+    - "**/.pre-commit-config.yaml"
+    - ".github/**/*"
+    - "tox.ini"
+    - ".coveragerc"
+
+tests:
+- changed-files:
+  - any-glob-to-any-file:
+    - "**/tests/**/*"
+    - "**/test/**/*"
+    - "**/test_*.py"
+    - "**/test.py"
+    - "**/conftest.py"
