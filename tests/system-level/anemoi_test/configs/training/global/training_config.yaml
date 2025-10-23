@@ -131,8 +131,6 @@ diagnostics:
   debug:
     anomaly_detection: False
 
-  profiler: False
-
   enable_checkpointing: True
   checkpoint:
     every_n_minutes:
