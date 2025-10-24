@@ -13,6 +13,7 @@ RESULTS_DIR_DATASETS = Path("$RESULTS_DIR/datasets")
 RESULTS_DIR_TRAINING = Path("$RESULTS_DIR/training")
 RESULTS_DIR_INFERENCE = Path("$RESULTS_DIR/inference")
 
+
 def load_yaml(config_file: Path) -> dict:
     with open(config_file, "r") as file:
         config = yaml.load(file, Loader=yaml.FullLoader)
@@ -120,6 +121,7 @@ class TrainingCheck(pf.Task):
         checkpoint_checks.environment_variable("CHECKPOINT_DIR", str(checkpoint_path))
         super().__init__(name=name, script=checkpoint_checks)
 
+
 class CreateInferenceFamily(pf.AnchorFamily):
     def __init__(self, config, **kwargs):
         super().__init__(name="inference", **kwargs)
@@ -140,9 +142,9 @@ class CreateInferenceFamily(pf.AnchorFamily):
                     ) from e
 
                 # Define some variables
-                inference_config_path=RESULTS_DIR_INFERENCE / folder / "configs" / "config.yaml"
-                output_path=RESULTS_DIR_INFERENCE / folder / "grib"
-                
+                inference_config_path = RESULTS_DIR_INFERENCE / folder / "configs" / "config.yaml"
+                output_path = RESULTS_DIR_INFERENCE / folder / "grib"
+
                 # Define a task to generate configuration files for inference
                 generate_config = InferenceConfigTask(
                     "generate_config_" + folder,
@@ -152,15 +154,19 @@ class CreateInferenceFamily(pf.AnchorFamily):
                     config_template_path=STATIC_DATA_DIR / "inference" / "config_template.yaml",
                     output_path=inference_config_path,
                 )
-                
+
                 # Define a task to retrieve data for inference
                 retrieve_cmd = task_config.get("retrieve_command", "anemoi-inference retrieve")
                 overrides = [
-                    "--target", "input.grib",
+                    "--target",
+                    "input.grib",
                     "--mars",
-                    "--verb", "retrieve",
-                    "--date", "20250101T00:00:00",
-                    "--input-type", "default-input"
+                    "--verb",
+                    "retrieve",
+                    "--date",
+                    "20250101T00:00:00",
+                    "--input-type",
+                    "default-input",
                 ]
                 retrieve_cmd = retrieve_cmd + " ".join(overrides)
                 retrieve = InferenceRetrieveTask(
@@ -169,9 +175,9 @@ class CreateInferenceFamily(pf.AnchorFamily):
                     config_path=inference_config_path,
                     mars_cmd=task_config.get("mars_command", "mars"),
                     output_path=output_path,
-                    retrieve_cmd=retrieve_cmd
+                    retrieve_cmd=retrieve_cmd,
                 )
-                
+
                 # Define a task to run inference
                 inference_cmd = task_config.get("inference_command", "anemoi-inference run")
                 inference = InferenceTask(
@@ -181,7 +187,7 @@ class CreateInferenceFamily(pf.AnchorFamily):
                     inference_cmd=inference_cmd,
                     output_path=output_path,
                 )
-                
+
                 # Define a task to run inference checks
                 check = InferenceCheckTask(
                     "check_" + folder,
@@ -194,8 +200,17 @@ class CreateInferenceFamily(pf.AnchorFamily):
                 # Attach required trainings to the inference task to set triggers in main family
                 generate_config.required_trainings = task_config.get("trainings", [])
 
+
 class InferenceConfigTask(pf.Task):
-    def __init__(self, name: str, suite_config: dict, checkpoint_path: Path, checkpoint_pattern: str, config_template_path: Path, output_path: Path):
+    def __init__(
+        self,
+        name: str,
+        suite_config: dict,
+        checkpoint_path: Path,
+        checkpoint_pattern: str,
+        config_template_path: Path,
+        output_path: Path,
+    ):
         self.required_trainings: Optional[str] = None
         script = pf.FileScript(SUITE_DIR / "configs/inference/generate_config.sh")
         script.environment_variable("CHECKPOINT_DIR", str(checkpoint_path))
@@ -204,8 +219,11 @@ class InferenceConfigTask(pf.Task):
         script.environment_variable("OUTPUT_PATH", str(output_path))
         super().__init__(name=name, script=script)
 
+
 class InferenceRetrieveTask(pf.Task):
-    def __init__(self, name: str, suite_config: dict, config_path: Path, mars_cmd: str, retrieve_cmd: str, output_path: Path):
+    def __init__(
+        self, name: str, suite_config: dict, config_path: Path, mars_cmd: str, retrieve_cmd: str, output_path: Path
+    ):
         self.required_trainings: Optional[str] = None
         script = pf.FileScript(SUITE_DIR / "configs/inference/retrieve.sh")
         script.environment_variable("CONFIG_PATH", str(config_path))
@@ -213,6 +231,7 @@ class InferenceRetrieveTask(pf.Task):
         script.environment_variable("RETRIEVE_CMD", retrieve_cmd)
         script.environment_variable("OUTPUT_PATH", str(output_path))
         super().__init__(name=name, script=[suite_config.tools.load("inference_env"), script])
+
 
 class InferenceTask(pf.Task):
     def __init__(self, folder: str, suite_config: dict, config_path: Path, inference_cmd: str, output_path: Path):
@@ -225,11 +244,13 @@ class InferenceTask(pf.Task):
             name=folder, script=[suite_config.tools.load("inference_env"), script], submit_arguments="gpu_job"
         )
 
+
 class InferenceCheckTask(pf.Task):
     def __init__(self, folder: str, suite_config: dict, output_path: Path):
         checks = pf.FileScript(SUITE_DIR / "configs/inference/basic_check.sh")
         checks.environment_variable("OUTPUT_PATH", str(output_path))
         super().__init__(name=folder, script=checks)
+
 
 class CleanupTask(pf.Task):
     def __init__(self, **kwargs):
@@ -270,7 +291,9 @@ class MainFamily(pf.AnchorFamily):
                         )
                     dataset_fam.find_node(dataset_task) >> training_task
 
-            for generate_config_task in [task for task in inference_fam.all_tasks if isinstance(task, InferenceConfigTask)]:
+            for generate_config_task in [
+                task for task in inference_fam.all_tasks if isinstance(task, InferenceConfigTask)
+            ]:
                 if not generate_config_task.required_trainings:
                     raise ValueError(
                         f"Generate config task '{generate_config_task.name}' requires trainings, but none are specified in task_config.yaml."
@@ -287,8 +310,9 @@ class MainFamily(pf.AnchorFamily):
             clean_up = CleanupTask()
             # only run cleanup if all tests pass
             dataset_fam >> clean_up
-            training_fam >> clean_up 
+            training_fam >> clean_up
             inference_fam >> clean_up
+
 
 class MainSuite(pf.Family):
     def __init__(self, config, **kwargs):
