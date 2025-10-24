@@ -4,7 +4,7 @@
 # For more information: https://pyflow-wellies.readthedocs.io/latest/configurations/
 
 # -------- Main Suite configuration -------------------------------------------
-group: "anemoi_tests"
+group: "anemoi_tests_new"
 name: "{USER}"
 labels:
   info: Anemoi system-level tests suite, deployed by {USER} for {name}
@@ -37,3 +37,4 @@ anemoi_core_branch: "main"  # Branch for anemoi-core
 anemoi_transform_branch: "main"  # Branch for anemoi-transform
 anemoi_utils_branch: "main"  # Branch for anemoi-utils
 anemoi_branch: "main"  # Branch for the anemoi repo to be used to deploy the anemoi_tests suite
+anemoi_inference_branch: "main"  # Branch for anemoi-inference

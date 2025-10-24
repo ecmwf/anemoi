@@ -1,0 +1,6 @@
+trainings:
+  - global
+mars_command: "mars"
+retrieve_command: "anemoi-inference retrieve"
+inference_command: "anemoi-inference run"
+
