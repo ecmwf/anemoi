@@ -168,7 +168,7 @@ class CreateInferenceFamily(pf.AnchorFamily):
                     "--input-type",
                     "default-input",
                 ]
-                retrieve_cmd = retrieve_cmd + " ".join(overrides)
+                retrieve_cmd = " ".join([retrieve_cmd] + overrides)
                 retrieve = InferenceRetrieveTask(
                     "retrieve_" + folder,
                     suite_config=config,
