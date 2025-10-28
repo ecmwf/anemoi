@@ -132,8 +132,6 @@ class CreateInferenceFamily(pf.AnchorFamily):
                 config_folder = config_dir / folder
                 if not config_folder.is_dir():
                     continue
-                if not (config_folder / "inference_config.yaml").exists():
-                    raise FileNotFoundError(f"Inference test requires a config file: {folder}/inference_config.yaml")
                 try:
                     task_config = load_yaml(config_folder / "task_config.yaml")
                 except FileNotFoundError as e:
@@ -204,7 +202,7 @@ class CreateInferenceFamily(pf.AnchorFamily):
 class InferenceConfigTask(pf.Task):
     def __init__(
         self,
-        name: str,
+        folder: str,
         suite_config: dict,
         checkpoint_path: Path,
         checkpoint_file: str,
@@ -217,20 +215,20 @@ class InferenceConfigTask(pf.Task):
         script.environment_variable("CHECKPOINT_FILE", checkpoint_file)
         script.environment_variable("CONFIG_TEMPLATE", str(config_template_path))
         script.environment_variable("OUTPUT_PATH", str(output_path))
-        super().__init__(name=name, script=script)
+        super().__init__(name="generate_" + folder, script=script)
 
 
 class InferenceRetrieveTask(pf.Task):
     def __init__(
-        self, name: str, suite_config: dict, config_path: Path, mars_cmd: str, retrieve_cmd: str, output_path: Path
+        self, folder: str, suite_config: dict, config_path: Path, mars_cmd: str, retrieve_cmd: str, output_path: Path
     ):
         self.required_trainings: Optional[str] = None
-        script = pf.FileScript(SUITE_DIR / "configs/inference/retrieve.sh")
+        script = pf.FileScript(SUITE_DIR / "configs/inference/" / folder / "retrieve.sh")
         script.environment_variable("CONFIG_PATH", str(config_path))
         script.environment_variable("MARS_CMD", mars_cmd)
         script.environment_variable("RETRIEVE_CMD", retrieve_cmd)
         script.environment_variable("OUTPUT_PATH", str(output_path))
-        super().__init__(name=name, script=[suite_config.tools.load("inference_env"), script])
+        super().__init__(name="retrieve_" + folder, script=[suite_config.tools.load("inference_env"), script])
 
 
 class InferenceTask(pf.Task):
@@ -241,7 +239,9 @@ class InferenceTask(pf.Task):
         script.environment_variable("INFERENCE_CMD", inference_cmd)
         script.environment_variable("OUTPUT_PATH", str(output_path))
         super().__init__(
-            name=folder, script=[suite_config.tools.load("inference_env"), script], submit_arguments="gpu_job"
+            name="inference_" + folder,
+            script=[suite_config.tools.load("inference_env"), script],
+            submit_arguments="gpu_job",
         )
 
 
@@ -249,7 +249,7 @@ class InferenceCheckTask(pf.Task):
     def __init__(self, folder: str, suite_config: dict, output_path: Path):
         checks = pf.FileScript(SUITE_DIR / "configs/inference/basic_check.sh")
         checks.environment_variable("OUTPUT_PATH", str(output_path))
-        super().__init__(name=folder, script=checks)
+        super().__init__(name="check_" + folder, script=checks)
 
 
 class CleanupTask(pf.Task):
