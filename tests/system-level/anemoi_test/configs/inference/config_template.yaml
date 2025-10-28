@@ -1,4 +1,4 @@
-checkpoint: $CHECKPOINT
+checkpoint: $CHECKPOINT_PATH
 input:
   grib: input.grib
 output:

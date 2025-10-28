@@ -150,7 +150,7 @@ class CreateInferenceFamily(pf.AnchorFamily):
                     "generate_config_" + folder,
                     suite_config=config,
                     checkpoint_path=Path(RESULTS_DIR_TRAINING / folder / "checkpoint"),
-                    checkpoint_pattern="inference-anemoi-by_epoch-epoch_*.ckpt",
+                    checkpoint_file="inference-latest.ckpt",
                     config_template_path=STATIC_DATA_DIR / "inference" / "config_template.yaml",
                     output_path=inference_config_path,
                 )
@@ -207,14 +207,14 @@ class InferenceConfigTask(pf.Task):
         name: str,
         suite_config: dict,
         checkpoint_path: Path,
-        checkpoint_pattern: str,
+        checkpoint_file: str,
         config_template_path: Path,
         output_path: Path,
     ):
         self.required_trainings: Optional[str] = None
         script = pf.FileScript(SUITE_DIR / "configs/inference/generate_config.sh")
         script.environment_variable("CHECKPOINT_DIR", str(checkpoint_path))
-        script.environment_variable("CHECKPOINT_PATTERN", checkpoint_pattern)
+        script.environment_variable("CHECKPOINT_FILE", checkpoint_file)
         script.environment_variable("CONFIG_TEMPLATE", str(config_template_path))
         script.environment_variable("OUTPUT_PATH", str(output_path))
         super().__init__(name=name, script=script)
