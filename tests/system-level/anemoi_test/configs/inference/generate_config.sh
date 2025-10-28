@@ -1,4 +1,4 @@
-# This script generates configuration files for inference based on model checkpoints.
+# This script generates configuration files for inference based on a checkpoint.
 
 # Create output directory
 mkdir -p $(dirname $OUTPUT_PATH)

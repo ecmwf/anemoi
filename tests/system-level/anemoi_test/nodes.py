@@ -299,13 +299,13 @@ class MainFamily(pf.AnchorFamily):
                         f"Generate config task '{generate_config_task.name}' requires trainings, but none are specified in task_config.yaml."
                     )
 
-                for training in generate_config_task.required_trainings:
-                    training_task = training.replace("-", "_")
-                    if training_task not in [task.name for task in training_fam.all_tasks]:
-                        raise KeyError(
-                            f"Training '{training}' in inference task {generate_config_task.name} not found in training test cases. Ensure that all trainings match the name of a training test case."
-                        )
-                    training_fam.find_node(training_task) >> generate_config_task
+                training = generate_config_task.required_trainings
+                training_task = training.replace("-", "_")
+                if training_task not in [task.name for task in training_fam.all_tasks]:
+                    raise KeyError(
+                        f"Training '{training}' in inference task {generate_config_task.name} not found in training test cases. Ensure that all trainings match the name of a training test case."
+                    )
+                training_fam.find_node(training_task) >> generate_config_task
 
             clean_up = CleanupTask()
             # only run cleanup if all tests pass
