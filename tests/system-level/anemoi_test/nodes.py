@@ -148,7 +148,7 @@ class CreateInferenceFamily(pf.AnchorFamily):
                     folder=folder,
                     suite_config=config,
                     checkpoint_path=Path(RESULTS_DIR_TRAINING / folder / "checkpoint"),
-                    checkpoint_file="inference-last.ckpt",
+                    checkpoint_file=task_config.get("checkpoint_file", "inference-last.ckpt"),
                     config_template_path=STATIC_DATA_DIR / "inference" / "config_template.yaml",
                     output_path=inference_config_path,
                 )
