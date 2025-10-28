@@ -145,10 +145,10 @@ class CreateInferenceFamily(pf.AnchorFamily):
 
                 # Define a task to generate configuration files for inference
                 generate_config = InferenceConfigTask(
-                    "generate_config_" + folder,
+                    folder=folder,
                     suite_config=config,
                     checkpoint_path=Path(RESULTS_DIR_TRAINING / folder / "checkpoint"),
-                    checkpoint_file="inference-latest.ckpt",
+                    checkpoint_file="inference-last.ckpt",
                     config_template_path=STATIC_DATA_DIR / "inference" / "config_template.yaml",
                     output_path=inference_config_path,
                 )
@@ -168,7 +168,7 @@ class CreateInferenceFamily(pf.AnchorFamily):
                 ]
                 retrieve_cmd = " ".join([retrieve_cmd] + overrides)
                 retrieve = InferenceRetrieveTask(
-                    "retrieve_" + folder,
+                    folder=folder,
                     suite_config=config,
                     config_path=inference_config_path,
                     mars_cmd=task_config.get("mars_command", "mars"),
@@ -179,7 +179,7 @@ class CreateInferenceFamily(pf.AnchorFamily):
                 # Define a task to run inference
                 inference_cmd = task_config.get("inference_command", "anemoi-inference run")
                 inference = InferenceTask(
-                    "inference_" + folder,
+                    folder=folder,
                     suite_config=config,
                     config_path=inference_config_path,
                     inference_cmd=inference_cmd,
@@ -188,7 +188,7 @@ class CreateInferenceFamily(pf.AnchorFamily):
 
                 # Define a task to run inference checks
                 check = InferenceCheckTask(
-                    "check_" + folder,
+                    folder=folder,
                     suite_config=config,
                     output_path=output_path,
                 )
@@ -215,7 +215,7 @@ class InferenceConfigTask(pf.Task):
         script.environment_variable("CHECKPOINT_FILE", checkpoint_file)
         script.environment_variable("CONFIG_TEMPLATE", str(config_template_path))
         script.environment_variable("OUTPUT_PATH", str(output_path))
-        super().__init__(name="generate_" + folder, script=script)
+        super().__init__(name="generate_config_" + folder, script=script)
 
 
 class InferenceRetrieveTask(pf.Task):
