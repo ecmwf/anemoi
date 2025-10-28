@@ -40,13 +40,18 @@ tools:
       branch: "{anemoi_utils_branch}"
       depends: [uv, UV_CACHE_DIR]
       post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ."
+    anemoi_models:
+      type: git
+      source: https://github.com/ecmwf/anemoi-core.git
+      branch: "{anemoi_core_branch}"
+      depends: [uv, UV_CACHE_DIR, anemoi_utils]
+      post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ./models[all,tests]"
     anemoi_inference:
       type: git
       source: https://github.com/ecmwf/anemoi-inference.git
       branch: "{anemoi_inference_branch}"
-      depends: [uv, UV_CACHE_DIR]
+      depends: [uv, UV_CACHE_DIR, anemoi_models, anemoi_transform]
       post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ."
-
 
   # --------Virtual envs --------------------------------------------------
   environments:
@@ -60,7 +65,7 @@ tools:
         depends: [python]
       inference_env:
         type: venv
-        packages: [anemoi_inference, anemoi_core]
+        packages: [anemoi_inference, anemoi_models, anemoi_transform]
         depends: [python]
 
   # --------Environment variables -----------------------------------------
