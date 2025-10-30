@@ -1,0 +1,3 @@
+# Run inference
+cd $OUTPUT_PATH
+$INFERENCE_CMD $CONFIG_PATH

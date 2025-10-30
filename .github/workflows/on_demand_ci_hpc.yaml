@@ -19,7 +19,10 @@ on:
         description: Branch of anemoi-utils to use in system-level tests
         required: false
         default: "main"
-
+      anemoi_inference_branch:
+        description: Branch of anemoi-inference to use in system-level tests
+        required: false
+        default: "main"
 
 jobs:
   prepare:
@@ -41,8 +44,9 @@ jobs:
           core_branch="${{ github.event.inputs.anemoi_core_branch }}"
           transform_branch="${{ github.event.inputs.anemoi_transform_branch }}"
           utils_branch="${{ github.event.inputs.anemoi_utils_branch }}"
+          inference_branch="${{ github.event.inputs.anemoi_inference_branch }}"
 
-          build_options="anemoi_branch=$anemoi_branch anemoi_datasets_branch=$datasets_branch anemoi_core_branch=$core_branch anemoi_transform_branch=$transform_branch anemoi_utils_branch=$utils_branch"
+          build_options="anemoi_branch=$anemoi_branch anemoi_datasets_branch=$datasets_branch anemoi_core_branch=$core_branch anemoi_transform_branch=$transform_branch anemoi_utils_branch=$utils_branch anemoi_inference_branch=$inference_branch"
           echo "build_options=$build_options" >> "$GITHUB_OUTPUT"
 
   system_level_test:
