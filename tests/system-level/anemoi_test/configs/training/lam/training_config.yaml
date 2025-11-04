@@ -143,8 +143,6 @@ diagnostics:
   debug:
     # this will detect and trace back NaNs / Infs etc. but will slow down training
     anomaly_detection: False
-
-
   enable_checkpointing: True
   checkpoint:
     every_n_minutes:
