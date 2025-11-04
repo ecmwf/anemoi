@@ -1,6 +1,12 @@
 Anemoi Framework
 ================
 
+[![Static Badge](https://github.com/ecmwf/codex/raw/refs/heads/main/Project%20Maturity/incubating_badge.svg)](https://github.com/ecmwf/codex/raw/refs/heads/main/Project%20Maturity#incubating)
+
+
+> \[!IMPORTANT\]
+> This software is **Incubating** and subject to ECMWF's guidelines on [Software Maturity](https://github.com/ecmwf/codex/raw/refs/heads/main/Project%20Maturity).
+
 [**Overview**](#overview) | [**Features**](#features) | [**Installation**](#installation) | [**Contributing**](#contributing) | [**Roadmap**](#roadmap) | [**Community**](#community) | [**License**](#license) |  [**Other resources & References**](#other-resources--references)
 
 
