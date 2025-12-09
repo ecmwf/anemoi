@@ -102,9 +102,9 @@ class TrainingTask(pf.Task):
 
         overrides = {
             "--config-path": STATIC_DATA_DIR / "training" / folder,
-            "hardware.paths.output": str(RESULTS_DIR_TRAINING / folder)
+            "system.output.root": str(RESULTS_DIR_TRAINING / folder)
             + "/",  # add trailing slash to ensure checkpoints are in ".../global/checkpoint"
-            "hardware.paths.data": RESULTS_DIR_DATASETS,
+            "system.inout.dataset": RESULTS_DIR_DATASETS,
             "training.max_epochs": 2,
         }
 
