@@ -104,7 +104,7 @@ class TrainingTask(pf.Task):
             "--config-path": STATIC_DATA_DIR / "training" / folder,
             "system.output.root": str(RESULTS_DIR_TRAINING / folder)
             + "/",  # add trailing slash to ensure checkpoints are in ".../global/checkpoint"
-            "system.input.dataset": RESULTS_DIR_DATASETS,
+            "system.input.dataset.root": RESULTS_DIR_DATASETS,
             "training.max_epochs": 2,
         }
 

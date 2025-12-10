@@ -207,7 +207,8 @@ system:
     num_nodes: 1
     num_gpus_per_model: 1
   input:
-    dataset: dummy_path/aifs-ea-an-oper-0001-mars-o96-2017-2017-6h-v8-testing.zarr
+    root: dummy_path
+    dataset: ${system.input.root}/aifs-ea-an-oper-0001-mars-o96-2017-2017-6h-v8-testing.zarr
     graph: ${system.output.root}graphs/dummy.pt
     truncation: null
     truncation_inv: null
