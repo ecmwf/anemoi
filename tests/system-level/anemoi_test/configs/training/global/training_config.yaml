@@ -5,46 +5,48 @@ data:
   frequency: 6h
   timestep: 6h
 
-  forcing:
-  - "cos_latitude"
-  - "cos_longitude"
-  - "sin_latitude"
-  - "sin_longitude"
-  - "cos_julian_day"
-  - "cos_local_time"
-  - "sin_julian_day"
-  - "sin_local_time"
-  - "insolation"
-  diagnostic:
-  - tp
-  - cp
+  datasets:
+    data:
+      forcing:
+      - "cos_latitude"
+      - "cos_longitude"
+      - "sin_latitude"
+      - "sin_longitude"
+      - "cos_julian_day"
+      - "cos_local_time"
+      - "sin_julian_day"
+      - "sin_local_time"
+      - "insolation"
+      diagnostic:
+      - tp
+      - cp
 
-  normalizer:
-    default: "mean-std"
+      normalizer:
+        default: "mean-std"
 
-    std:
-    - "tp"
+        std:
+        - "tp"
 
-    min-max:
-    max:
-    none:
-    - "cos_latitude"
-    - "cos_longitude"
-    - "sin_latitude"
-    - "sin_longitude"
-    - "cos_julian_day"
-    - "cos_local_time"
-    - "sin_julian_day"
-    - "sin_local_time"
-    - "insolation"
+        min-max:
+        max:
+        none:
+        - "cos_latitude"
+        - "cos_longitude"
+        - "sin_latitude"
+        - "sin_longitude"
+        - "cos_julian_day"
+        - "cos_local_time"
+        - "sin_julian_day"
+        - "sin_local_time"
+        - "insolation"
 
-  imputer:
-    default: "none"
+      imputer:
+        default: "none"
 
-  processors:
-    normalizer:
-      _target_: anemoi.models.preprocessing.normalizer.InputNormalizer
-      config: ${data.normalizer}
+      processors:
+        normalizer:
+          _target_: anemoi.models.preprocessing.normalizer.InputNormalizer
+          config: ${data.datasets.data.normalizer}
 
   num_features: null # number of features in the forecast state
 
@@ -69,8 +71,10 @@ dataloader:
     test: 20
 
   grid_indices:
-    _target_: anemoi.training.data.grid_indices.FullGrid
-    nodes_name: ${graph.data}
+    datasets:
+      data:
+        _target_: anemoi.training.data.grid_indices.FullGrid
+        nodes_name: ${graph.data}
 
   dataset: ${system.input.dataset}
 
@@ -247,7 +251,7 @@ graph:
     data:
       node_builder:
         _target_: anemoi.graphs.nodes.AnemoiDatasetNodes # options: AnemoiDatasetNodes, NPZFileNodes
-        dataset: ${dataloader.dataset}
+        dataset:  "PLACEHOLDER_DATASET_WILL_BE_OVERRIDDEN"  # Always overridden from dataloader
       attributes: ${graph.attributes.nodes}
     # Hidden nodes
     hidden:
@@ -430,30 +434,38 @@ training:
 
   # loss function for the model
   training_loss:
-    # loss class to initialise
-    _target_: anemoi.training.losses.MSELoss
-    # Scalers to include in loss calculation
-    scalers: ['pressure_level', 'general_variable', 'nan_mask_weights', 'node_weights']
-    ignore_nans: False
+    datasets:
+      data:
+        # loss class to initialise
+        _target_: anemoi.training.losses.MSELoss
+        # Scalers to include in loss calculation
+        scalers: ['pressure_level', 'general_variable', 'nan_mask_weights', 'node_weights']
+        ignore_nans: False
 
   validation_metrics:
-    # loss class to initialise
-    mse:
-      _target_: anemoi.training.losses.MSELoss
-      scalers: []
-      # other kwargs
-      ignore_nans: True
+    datasets:
+      data:
+        # loss class to initialise
+        mse:
+          _target_: anemoi.training.losses.MSELoss
+          scalers: []
+          # other kwargs
+          ignore_nans: True
 
   variable_groups:
-    default: sfc
-    pl:
-      param: [q, t, u, v, w]
+    datasets:
+      data:
+        default: sfc
+        pl:
+          param: [q, t, u, v, w]
 
   metrics:
-  - z_500
-  - t_850
-  - u_850
-  - v_850
+    datasets:
+      data:
+        - z_500
+        - t_850
+        - u_850
+        - v_850
 
   # length of the "rollout" window (see Keisler's paper)
   rollout:
@@ -477,42 +489,44 @@ training:
   submodules_to_freeze: []
 
   scalers:
-    general_variable:
-      _target_: anemoi.training.losses.scalers.GeneralVariableLossScaler
-      weights:
-        default: 1
-        q: 0.6 #1
-        t: 6   #1
-        u: 0.8 #0.5
-        v: 0.5 #0.33
-        w: 0.001
-        z: 12  #1
-        sp: 10
-        10u: 0.1
-        10v: 0.1
-        2d: 0.5
-        tp: 0.025
-        cp: 0.0025
+    datasets:
+      data:
+        general_variable:
+          _target_: anemoi.training.losses.scalers.GeneralVariableLossScaler
+          weights:
+            default: 1
+            q: 0.6 #1
+            t: 6   #1
+            u: 0.8 #0.5
+            v: 0.5 #0.33
+            w: 0.001
+            z: 12  #1
+            sp: 10
+            10u: 0.1
+            10v: 0.1
+            2d: 0.5
+            tp: 0.025
+            cp: 0.0025
 
-    pressure_level:
-      _target_: anemoi.training.losses.scalers.ReluVariableLevelScaler
-      group: pl
-      y_intercept: 0.2
-      slope: 0.001
+        pressure_level:
+          _target_: anemoi.training.losses.scalers.ReluVariableLevelScaler
+          group: pl
+          y_intercept: 0.2
+          slope: 0.001
 
-    # mask NaNs with zeros in the loss function
-    nan_mask_weights:
-      _target_: anemoi.training.losses.scalers.NaNMaskScaler
+        # mask NaNs with zeros in the loss function
+        nan_mask_weights:
+          _target_: anemoi.training.losses.scalers.NaNMaskScaler
 
-    stdev_tendency:
-      _target_: anemoi.training.losses.scalers.StdevTendencyScaler
+        stdev_tendency:
+          _target_: anemoi.training.losses.scalers.StdevTendencyScaler
 
-    var_tendency:
-      _target_: anemoi.training.losses.scalers.VarTendencyScaler
+        var_tendency:
+          _target_: anemoi.training.losses.scalers.VarTendencyScaler
 
-    # Scalers from node attributes
-    node_weights:
-      _target_: anemoi.training.losses.scalers.GraphNodeAttributeScaler
-      nodes_name: ${graph.data}
-      nodes_attribute_name: area_weight
-      norm: unit-sum
+        # Scalers from node attributes
+        node_weights:
+          _target_: anemoi.training.losses.scalers.GraphNodeAttributeScaler
+          nodes_name: ${graph.data}
+          nodes_attribute_name: area_weight
+          norm: unit-sum
