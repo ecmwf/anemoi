@@ -45,7 +45,7 @@ The diagram below represents the main packages in the Anemoi framework and the g
 Summary of workflow:
 - Start by building a dataset with `anemoi-datasets`.
 - Train a model using `anemoi-core` (central yellow boxes inside a black rectangle): This repository groups three distinct but related packages to support model development:
-    - `anemoi-modes`: Contains definitions for different machine learning models.
+    - `anemoi-models`: Contains definitions for different machine learning models.
     - `anemoi-training`: Provides the training framework and utilities for fitting models on prepared datasets.
     - `anemoi-graphs`: Supports graph-based representations for modeling meteorological data.
 These three packages are separated to make development easier, but they all live under the [anemoi-core GitHub repository](https://github.com/ecmwf/anemoi-core).
