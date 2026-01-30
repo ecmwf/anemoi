@@ -38,13 +38,17 @@ input:
       param:
       - q
       - t
-  - accumulations:
-      class: ea
-      expver: '0001'
-      grid: o96
-      param:
-      - cp
-      - tp
+  - accumulate:
+      period: 6h
+      availability: auto
+      source:
+        mars:
+          class: ea
+          expver: '0001'
+          grid: o96
+          param:
+          - cp
+          - tp
   - constants:
       param:
       - cos_latitude
