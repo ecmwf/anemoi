@@ -391,7 +391,8 @@ training:
 
   precision: 16-mixed
 
-  multistep_input: 2
+  multistep_input: 3
+  multistep_output: 2
 
   accum_grad_batches: 1
 
@@ -439,7 +440,7 @@ training:
         # loss class to initialise
         _target_: anemoi.training.losses.MSELoss
         # Scalers to include in loss calculation
-        scalers: ['pressure_level', 'general_variable', 'nan_mask_weights', 'node_weights']
+        scalers: ['pressure_level', 'general_variable', 'nan_mask_weights', 'node_weights', 'output_steps']
         ignore_nans: False
 
   validation_metrics:
@@ -530,3 +531,8 @@ training:
           nodes_name: ${graph.data}
           nodes_attribute_name: area_weight
           norm: unit-sum
+
+        output_steps:
+          _target_: anemoi.training.losses.scalers.TimeStepScaler
+          norm: "unit-sum"
+          weights: [1.0, 2.0]
