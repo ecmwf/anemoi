@@ -32,6 +32,20 @@ Possible uses of *Anemoi* are for developing:
 -  Ensemble/probabilistic models
 
 #########
+ What is it for, and what is it not?
+#########
+Anemoi started out as a codebase for building data-driven weather forecasting models. Since then, it has evolved to include additional *tasks*, such as downscaling (superresolution), time interpolation (temporal downscaling), and autoencoding. What these applications share is the need to build models in which information must be gathered, exchanged, and processed across the spatial dimension. For these use cases, scalable and parallelisable graph neural network tooling is particularly valuable.
+
+Anemoi is not intended to address all Earth-system ML problems. Problems that focus on strictly local networks or on processing long temporal signals (e.g. LSTMs) share little in common with Anemoi’s current focus, and the framework is therefore unlikely to provide significant benefits for those use cases.
+
+#########
+ Who is it for?
+#########
+Anemoi’s primary developers are based in operational meteorological centres, where it is used to create operational data-driven models. Many of these developers are also users of the framework, building and deploying models in practice. This user group places a strong emphasis on structure and reproducibility, in particular the ability to recreate the *same* model as Anemoi evolves and expands.
+
+Anemoi also aims to serve the wider research community by enabling users to test new methods for training data-driven forecasting systems. This user group places greater emphasis on flexibility, allowing ideas to be easily adapted and tested.
+
+#########
  License
 #########
 
