@@ -6,12 +6,10 @@ requires = [ "setuptools>=61" ]
 name = "anemoi-docs"
 version = "0.0.1"
 description = "The documentation for anemoi"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
 ]
