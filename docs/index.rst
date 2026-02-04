@@ -36,7 +36,7 @@ Possible uses of *Anemoi* are for developing:
 #########
  What is it for, and what is it not?
 #########
-Anemoi started out as a codebase for building data-driven weather forecasting models. Since then, it has evolved to include additional *tasks*, such as downscaling (superresolution), time interpolation (temporal downscaling), and autoencoding. What these applications share is the need to build models in which information must be gathered, exchanged, and processed across the spatial dimension. For these use cases, scalable and parallelisable graph neural network tooling is particularly valuable.
+Anemoi started out as a codebase for building data-driven weather forecasting models. Since then, it has evolved to include additional *tasks*, such as downscaling (superresolution), time interpolation (temporal downscaling), and autoencoding. What these applications share is the need to build models in which information must be gathered, exchanged, and processed across the spatial dimension. For these use cases, scalable and parallelisable graph and transformer tooling is particularly valuable.
 
 Anemoi is not intended to address all Earth-system ML problems. Problems that focus on strictly local networks or on processing long temporal signals (e.g. LSTMs) share little in common with Anemoi’s current focus, and the framework is therefore unlikely to provide significant benefits for those use cases.
 
