@@ -6,7 +6,8 @@
 
 The *Anemoi* framework provides a complete toolkit to develop
 data-driven weather models – from data preparation through to inference.
-`The development is primarily driven by European Meterological Organisations <https://github.com/ecmwf/anemoi-core/blob/main/CONTRIBUTORS.md#contributing-organisations>`_
+`The development is primarily driven by a number of European Meterological Organisations 
+<https://github.com/ecmwf/anemoi-core/blob/main/CONTRIBUTORS.md#contributing-organisations>`_
 but open to contributions from any organisation or any individual.
 The framework is composed of several packages which target the different
 components necessary to construct data-driven weather models. To aid
