@@ -1,7 +1,7 @@
 static_data:
   anemoi_test_configs:
     type: git
-    source: "git@github.com:ecmwf/anemoi.git"
+    source: "git@github.com:ways/anemoi.git"
     branch: "{anemoi_branch}"
     files:
       - "tests/system-level/anemoi_test/configs/*"
