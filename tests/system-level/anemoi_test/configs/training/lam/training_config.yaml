@@ -71,13 +71,16 @@ dataloader:
     validation: 2
     test: 20
 
-  dataset:
-    cutout:
-      - dataset: ${system.input.dataset}
-        thinning: 25
-      - dataset: ${system.input.forcing_dataset}
-    adjust: all
-    min_distance_km: 0
+  dataset_config:
+    dataset:
+      cutout:
+        - dataset: ${system.input.dataset}
+          thinning: 25
+        - dataset: ${system.input.forcing_dataset}
+      adjust: all
+      min_distance_km: 0
+    frequency: ${data.frequency}
+    drop: []
 
   grid_indices:
     datasets:
@@ -89,31 +92,25 @@ dataloader:
   training:
     datasets:
       data:
-        dataset: ${dataloader.dataset}
+        dataset_config: ${dataloader.dataset_config}
         start: null
         end: 2017-01-07
-        frequency: ${data.frequency}
-        drop:  []
 
   validation_rollout: 1 # number of rollouts to use for validation, must be equal or greater than rollout expected by callbacks
 
   validation:
     datasets:
       data:
-        dataset: ${dataloader.dataset}
+        dataset_config: ${dataloader.dataset_config}
         start: 2017-01-08
         end: 2021
-        frequency: ${data.frequency}
-        drop:  []
 
   test:
     datasets:
       data:
-        dataset: ${dataloader.dataset}
+        dataset_config: ${dataloader.dataset_config}
         start: 2022
         end: null
-        frequency: ${data.frequency}
-        drop:  []
 
 diagnostics:
   plot:
