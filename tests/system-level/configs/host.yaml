@@ -1,7 +1,7 @@
 host:
   hostname: "hpc"
   user: "{USER}"
-  log_directory: "%ECF_HOME%"
+  log_directory: "/lus/h1resw02/project/prepml/ecflow_server/logs"
   workdir: "$TMPDIR"
   submit_arguments:
     defaults:
