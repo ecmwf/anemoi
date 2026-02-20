@@ -76,36 +76,33 @@ dataloader:
         _target_: anemoi.training.data.grid_indices.FullGrid
         nodes_name: ${graph.data}
 
-  dataset: ${system.input.dataset}
+  dataset_config:
+    dataset: ${system.input.dataset}
+    frequency: ${data.frequency}
+    drop: []
 
   training:
     datasets:
       data:
-        dataset: ${dataloader.dataset}
+        dataset_config: ${dataloader.dataset_config}
         start: null
         end: 2017-01-07
-        frequency: ${data.frequency}
-        drop:  []
 
   validation_rollout: 1 # number of rollouts to use for validation, must be equal or greater than rollout expected by callbacks
 
   validation:
     datasets:
       data:
-        dataset: ${dataloader.dataset}
+        dataset_config: ${dataloader.dataset_config}
         start: 2017-01-08
         end: null
-        frequency: ${data.frequency}
-        drop:  []
 
   test:
     datasets:
       data:
-        dataset: ${dataloader.dataset}
+        dataset_config: ${dataloader.dataset_config}
         start: 2022
         end: null
-        frequency: ${data.frequency}
-        drop:  []
 
 diagnostics:
   plot:
@@ -156,17 +153,6 @@ diagnostics:
       num_models_saved: 0
 
   log:
-    wandb:
-      enabled: False
-      offline: False
-      log_model: False
-      project: 'Anemoi'
-      entity: null
-      # logger options (these probably come with some overhead)
-      gradients: False
-      parameters: False
-    tensorboard:
-      enabled: False
     mlflow:
       enabled: False
       offline: False
@@ -229,7 +215,6 @@ system:
       root: logs
       wandb: wandb
       mlflow: mlflow
-      tensorboard: tensorboard
     checkpoints:
       root: checkpoint
       every_n_epochs: anemoi-by_epoch-epoch_{epoch:03d}-step_{step:06d}
