@@ -1,0 +1,16 @@
+checkpoint:
+  huggingface:
+     repo_id: "met-no/bris_cloudy-skies"
+     filename: "2025-10/cloudy-skies-2025-10.ckpt"
+
+input:
+  cutout:
+    - dataset: $LAM_DATASET
+      trim_edge: 50
+      reorder: sort
+    - dataset: $GLOBAL_DATASET
+      reorder: sort
+
+output:
+  netcdf: out.nc
+lead_time: 48h
