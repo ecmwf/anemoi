@@ -1,5 +1,7 @@
 name: aifs-ea-an-oper-0001-mars-o48-2025-2025-6h-v1-testing
 description: Coarse global dataset for CI/CD testing, 20250927T00Z-20251004T06Z, resolution O48. For testing streched grid.
+attribution: ECMWF
+licence: CC-BY-4.0
 dates:
   start: '2025-09-27T00:00:00+00:00'
   end: '2025-10-04T06:00:00+00:00'
@@ -30,9 +32,9 @@ input:
       - sdor
       - slor
       levtype: sfc
-      class: od
-      type: an
-      stream: oper
+      class: ea # https://codes.ecmwf.int/grib/format/mars/class/
+      type: an # https://codes.ecmwf.int/grib/format/mars/type/
+      stream: oper # https://codes.ecmwf.int/grib/format/mars/stream/
       expver: '0001'
       grid: O48
   - mars: # pressure level parameters
@@ -44,7 +46,7 @@ input:
       - t
       - z
       levtype: pl
-      class: od
+      class: ea
       type: an
       stream: oper
       expver: '0001'
@@ -88,7 +90,7 @@ input:
           - ssrd
           - strd
           levtype: sfc
-          class: od
+          class: ea
           type: fc          # accumulations come from forecasts, not analyses
           stream: oper
           expver: '0001'
