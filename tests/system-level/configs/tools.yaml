@@ -46,11 +46,17 @@ tools:
       branch: "{anemoi_core_branch}"
       depends: [uv, UV_CACHE_DIR, anemoi_utils]
       post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ./models[all,tests]"
+    huggingface_hub:
+      type: git
+      source: https://github.com/huggingface/huggingface_hub.git
+      branch: "main"
+      depends: [uv, UV_CACHE_DIR]
+      post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ."
     anemoi_inference:
       type: git
       source: https://github.com/ecmwf/anemoi-inference.git
       branch: "{anemoi_inference_branch}"
-      depends: [uv, UV_CACHE_DIR, anemoi_models, anemoi_transform, huggingface-hub]
+      depends: [uv, UV_CACHE_DIR, anemoi_models, anemoi_transform, huggingface_hub]
       post_script: "git fetch --unshallow --tags && uv pip install --upgrade pip && uv pip install -e ."
 
   # --------Virtual envs --------------------------------------------------
@@ -65,7 +71,7 @@ tools:
         depends: [python]
       inference_env:
         type: venv
-        packages: [anemoi_inference, anemoi_models, anemoi_transform, huggingface-hub]
+        packages: [anemoi_inference, anemoi_models, anemoi_transform]
         depends: [python]
 
   # --------Environment variables -----------------------------------------
