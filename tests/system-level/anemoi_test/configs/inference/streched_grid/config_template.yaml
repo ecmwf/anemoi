@@ -6,10 +6,7 @@ checkpoint:
 input:
   cutout:
     - dataset: $LAM_DATASET
-      trim_edge: 50
-      reorder: sort
     - dataset: $GLOBAL_DATASET
-      reorder: sort
 
 output:
   netcdf: out.nc
