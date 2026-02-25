@@ -7,7 +7,7 @@ mkdir -p $(dirname $OUTPUT_PATH)
 # export CHECKPOINT_PATH=$(find $CHECKPOINT_DIR -name "$CHECKPOINT_FILE")
 
 # Supply required datasets
-export LAM_DATASET="$RESULTS_DIR_DATASETS/aifs-ea-an-oper-0001-mars-O96-2025-2025-6h-v1-testing.zarr"
+export LAM_DATASET="$RESULTS_DIR_DATASETS/aifs-ea-an-oper-0001-mars-o96-2025-2025-6h-v1-testing.zarr"
 find $LAM_DATASET || {
     echo "LAM dataset not found at $LAM_DATASET"
     exit 1;
