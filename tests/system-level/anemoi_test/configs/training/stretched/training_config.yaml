@@ -16,9 +16,7 @@ data:
       - "cos_local_time"
       - "sin_julian_day"
       - "sin_local_time"
-      - "z"
-      - "lsm"
-      - "insolation"
+
 
       diagnostic:
       - "tp"
@@ -31,7 +29,6 @@ data:
 
         min-max:
         max:
-        - "z"
         none:
         - "cos_latitude"
         - "cos_longitude"
@@ -41,8 +38,6 @@ data:
         - "cos_local_time"
         - "sin_julian_day"
         - "sin_local_time"
-        - "lsm"
-        - "insolation"
 
       imputer:
         default: "none"
