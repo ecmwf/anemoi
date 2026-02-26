@@ -1,0 +1,6 @@
+checkpoint: $CHECKPOINT_PATH
+input:
+  grib: input.grib
+output:
+  grib: output.grib
+lead_time: 48h
