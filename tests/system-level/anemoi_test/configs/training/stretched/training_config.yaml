@@ -16,9 +16,12 @@ data:
       - "cos_local_time"
       - "sin_julian_day"
       - "sin_local_time"
+      - "z"
+      - "lsm"
+      - "insolation"
 
       diagnostic:
-      - tp
+      - "tp"
 
       normalizer:
         default: "mean-std"
@@ -28,6 +31,7 @@ data:
 
         min-max:
         max:
+        - "z"
         none:
         - "cos_latitude"
         - "cos_longitude"
@@ -37,6 +41,8 @@ data:
         - "cos_local_time"
         - "sin_julian_day"
         - "sin_local_time"
+        - "lsm"
+        - "insolation"
 
       imputer:
         default: "none"
@@ -263,7 +269,7 @@ graph:
     - _target_: anemoi.graphs.edges.KNNEdges # options: KNNEdges, CutOffEdges
       num_nearest_neighbours: 12 # only for knn method
       source_mask_attr_name: null
-      target_mask_attr_name: cutout_mask
+      target_mask_attr_name: null
     attributes: ${graph.attributes.edges}
   # Processor configuration
   - source_name: ${graph.hidden}
@@ -282,7 +288,7 @@ graph:
     - _target_: anemoi.graphs.edges.KNNEdges # options: KNNEdges, CutOffEdges
       num_nearest_neighbours: 3 # only for knn method
       source_mask_attr_name: null
-      target_mask_attr_name: cutout_mask
+      target_mask_attr_name: null
     attributes: ${graph.attributes.edges}
 
   attributes:
@@ -486,7 +492,8 @@ training:
     datasets:
       data:
         default: sfc
-        pl: [q, t, u, v, w, z]
+        pl: 
+          param: [q, t, u, v, w, z]
 
   metrics:
     datasets:
