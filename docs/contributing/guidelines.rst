@@ -123,6 +123,17 @@ Examples of PRs that can be labeled ``ATS Approval Not Needed``:
    Assuming those do not imply any breaking changes or dependency changes
    as explained above
 
+Automated Labels
+================
+
+Some labels are managed automatically by GitHub Actions and should not
+be added or removed manually:
+
+-  ``conflict`` – Automatically added when a PR has merge conflicts
+   with the base branch, and removed when the conflicts are resolved.
+   If your PR receives this label, rebase your branch against ``main``
+   to resolve the conflicts.
+
 .. _branching-guidelines:
 
 **********************
