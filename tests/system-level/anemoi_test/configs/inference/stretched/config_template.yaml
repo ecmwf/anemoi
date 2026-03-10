@@ -1,6 +1,11 @@
 checkpoint: $CHECKPOINT_PATH
 input:
-  grib: input.grib
+  # grib: input.grib
+  cutout:
+    lam_0:
+      grib: lam.grib
+    global:
+      grib: global.grib
 output:
   grib: output.grib
 lead_time: 48h
