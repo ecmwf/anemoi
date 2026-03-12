@@ -7,5 +7,6 @@ input:
     global:
       grib: global.grib
 output:
-  grib: output.grib
+  # grib: output.grib
+  netcdf: output.nc
 lead_time: 48h
