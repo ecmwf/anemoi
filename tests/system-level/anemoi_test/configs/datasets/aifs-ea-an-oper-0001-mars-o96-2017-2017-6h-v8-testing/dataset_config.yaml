@@ -13,6 +13,11 @@ dates:
   start: 2017-01-01 6:00:00
   end: 2017-01-10 18:00:00
   frequency: 6h
+#  group_by: weekly
+
+build:
+  # group_by moved here due to
+  # > TypeError: anemoi.datasets.dates.groups.Groups() got multiple values for keyword argument 'group_by'
   group_by: weekly
 
 input:
