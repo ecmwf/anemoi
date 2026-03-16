@@ -77,9 +77,9 @@ output:
   ensemble_dimension: 2
   flatten_grid: true
   order_by:
-  - valid_datetime: ascending
-  - param_level: ascending
-  - number: ascending
+  - valid_datetime
+  - param_level
+  - number
   remapping:
     param_level: '{param}_{levelist}'
   statistics: param_level
