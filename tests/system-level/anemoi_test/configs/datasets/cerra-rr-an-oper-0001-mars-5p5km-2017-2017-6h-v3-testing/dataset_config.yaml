@@ -80,8 +80,6 @@ output:
   - valid_datetime
   - param_level
   - number
-  remapping:
-    param_level: '{param}_{levelist}'
   statistics: param_level
 
 statistics:
@@ -92,3 +90,5 @@ build:
   group_by: monthly
   use_grib_paramid: false
   variable_naming: default
+  remapping:
+    param_level: '{param}_{levelist}'
