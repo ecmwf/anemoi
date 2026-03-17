@@ -122,6 +122,8 @@ Some issues and PRs never go inactive:
 - ``roadmap`` - Planned features
 - ``known-issue`` - Confirmed issues not yet fixed
 
+If your issue is still actively being worked on but may take longer to resolve, you can apply the known-issue label to indicate that it should not be treated as inactive.
+
 **PRs:**
 
 - ``autorelease: pending`` - Release automation PRs
