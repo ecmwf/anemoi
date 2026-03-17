@@ -110,6 +110,8 @@ How It Works
 - **Issues**: After 90 days of inactivity, labeled as ``inactive``; closed after 10 more days
 - **PRs**: After 90 days of inactivity, labeled as ``inactive``; closed after 10 more days
 
+If during the grace period of 10 days, a maintainer or contributor provides an update on the issue or PR to indicate that it is still being worked on, the timer is reset and the issue or PR is not closed.
+
 Exempt Labels
 -------------
 
