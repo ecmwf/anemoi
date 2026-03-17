@@ -125,6 +125,7 @@ Some issues and PRs never go inactive:
 - ``known-issue`` - Confirmed issues not yet fixed
 
 If your issue is still actively being worked on but may take longer to resolve, you can apply the known-issue label to indicate that it should not be treated as inactive.
+We ask contributors to use this mechanism in good faith and to not arbitrarily assign labels to circumvent the bot.
 
 **PRs:**
 
