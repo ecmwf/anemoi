@@ -26,6 +26,10 @@ input:
       - 10v
       - 2d
       - 2t
+      - lsm
+      - sdor
+      - slor
+      - z
   - mars:
       class: ea
       expver: '0001'
