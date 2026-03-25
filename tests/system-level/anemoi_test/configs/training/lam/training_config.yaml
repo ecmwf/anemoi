@@ -57,6 +57,7 @@ dataloader:
     - dataset: ${system.input.forcing_dataset}
     adjust: all
     min_distance_km: 0
+    max_distance_km: 300
   model_run_info: null
   training:
     datasets:
@@ -242,19 +243,22 @@ graph:
       attributes: ${graph.attributes.nodes}
     hidden:
       node_builder:
-        _target_: anemoi.graphs.nodes.StretchedTriNodes
-        lam_resolution: 5
-        global_resolution: 3
+        _target_: anemoi.graphs.nodes.LimitedAreaTriNodes
+        resolution: 6
         reference_node_name: data
         mask_attr_name: cutout_mask
-        margin_radius_km: 11
+        margin_radius_km: 10
   edges:
   - source_name: data
     target_name: hidden
     edge_builders:
-    - _target_: anemoi.graphs.edges.KNNEdges
-      num_nearest_neighbours: 12
+    - _target_: anemoi.graphs.edges.CutOffEdges
+      cutoff_factor: 0.6
       source_mask_attr_name: null
+      target_mask_attr_name: null
+    - _target_: anemoi.graphs.edges.CutOffEdges
+      cutoff_factor: 1.5
+      source_mask_attr_name: boundary_mask
       target_mask_attr_name: null
     attributes: ${graph.attributes.edges}
   - source_name: hidden
@@ -262,7 +266,7 @@ graph:
     edge_builders:
     - _target_: anemoi.graphs.edges.MultiScaleEdges
       x_hops: 1
-      scale_resolutions: ${graph.nodes.hidden.node_builder.lam_resolution}
+      scale_resolutions: ${graph.nodes.hidden.node_builder.resolution}
       source_mask_attr_name: null
       target_mask_attr_name: null
     attributes: ${graph.attributes.edges}
@@ -272,8 +276,9 @@ graph:
     - _target_: anemoi.graphs.edges.KNNEdges
       num_nearest_neighbours: 3
       source_mask_attr_name: null
-      target_mask_attr_name: null
+      target_mask_attr_name: cutout_mask
     attributes: ${graph.attributes.edges}
+  post_processors: []
   attributes:
     nodes:
       cutout_mask:
@@ -283,21 +288,16 @@ graph:
         masks:
           _target_: anemoi.graphs.nodes.attributes.CutOutMask
       area_weight:
-        _target_: anemoi.graphs.nodes.attributes.SphericalAreaWeights
-        norm: unit-max
-        fill_value: 0
-      lam_area_weight:
         _target_: anemoi.graphs.nodes.attributes.MaskedPlanarAreaWeights
         mask_node_attr_name: cutout_mask
         norm: unit-max
     edges:
       edge_length:
         _target_: anemoi.graphs.edges.attributes.EdgeLength
-        norm: unit-max
+        norm: unit-std
       edge_dirs:
         _target_: anemoi.graphs.edges.attributes.EdgeDirection
         norm: unit-std
-  post_processors: []
 model:
   num_channels: 16
   cpu_offload: false
@@ -366,7 +366,8 @@ model:
     _target_: anemoi.models.layers.residual.SkipConnection
     step: -1
   output_mask:
-    _target_: anemoi.training.utils.masks.NoOutputMask
+    _target_: anemoi.training.utils.masks.Boolean1DMask
+    attribute_name: cutout_mask
   trainable_parameters:
     data: 8
     hidden: 8
@@ -418,33 +419,23 @@ training:
           _target_: anemoi.training.losses.scalers.VarTendencyScaler
           timestep: ${data.timestep}
         node_weights:
-          _target_: anemoi.training.losses.scalers.ReweightedGraphNodeAttributeScaler
-          nodes_attribute_name: area_weight
-          scaling_mask_attribute_name: cutout_mask
-          weight_frac_of_total: 0.25
-          norm: unit-sum
-        lam_node_weights:
           _target_: anemoi.training.losses.scalers.GraphNodeAttributeScaler
-          nodes_attribute_name: lam_area_weight
+          nodes_attribute_name: area_weight
           norm: unit-sum
         limited_area_mask:
           _target_: anemoi.training.losses.scalers.GraphNodeAttributeScaler
           nodes_attribute_name: cutout_mask
-          norm: null
-        outside_lam_mask:
-          _target_: anemoi.training.losses.scalers.GraphNodeAttributeScaler
-          nodes_attribute_name: boundary_mask
           norm: null
         time_steps:
           _target_: anemoi.training.losses.scalers.UniformTimeStepScaler
           multistep_output: ${training.multistep_output}
   run_id: null
   fork_run_id: null
+  transfer_learning: false
   load_weights_only: false
   update_ds_stats_on_ckpt_load:
     states: false
     tendencies: true
-  transfer_learning: false
   deterministic: false
   precision: 16-mixed
   multistep_input: 2
@@ -481,30 +472,10 @@ training:
   validation_metrics:
     datasets:
       data:
-        mse:
-          _target_: anemoi.training.losses.MSELoss
-          scalers:
-          - node_weights
-          - time_steps
-          ignore_nans: true
-        mse_inside_lam_contribution:
-          _target_: anemoi.training.losses.MSELoss
-          scalers:
-          - limited_area_mask
-          - node_weights
-          - time_steps
-          ignore_nans: true
-        mse_outside_lam_contribution:
-          _target_: anemoi.training.losses.MSELoss
-          scalers:
-          - outside_lam_mask
-          - node_weights
-          - time_steps
-          ignore_nans: true
         mse_inside_lam:
           _target_: anemoi.training.losses.MSELoss
           scalers:
-          - lam_node_weights
+          - node_weights
           - time_steps
           ignore_nans: true
   variable_groups:
