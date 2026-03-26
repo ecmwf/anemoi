@@ -1,3 +1,12 @@
+# =========================================
+# AUTO-GENERATED FILE - DO NOT EDIT MANUALLY
+# =========================================
+# source_repo: anemoi-core
+# branch: tests/add-script-to-generate-configs
+# commit: a23c97c272c02de18519deebc4e2149105a24be1
+# dirty: True
+# generated_at: 2026-03-26T11:10:19.542913+00:00
+# =========================================
 data:
   format: zarr
   frequency: 6h
