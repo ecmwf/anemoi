@@ -15,7 +15,7 @@ Check out the branch in anemoi-core based on which you would like to update the 
 provide the path to your local anemoi repo, and can run the script like so:
 
 ```
-python training/tests/integration/generate_slt_configs.py PATH_TO_YOUR_ANEMOI_REPO
+python training/tests/integration/scripts/update_slt_configs.py PATH_TO_YOUR_ANEMOI_REPO
 ```
 
 It will update the training config files in the system-level tests folder, according to the path that you provided. You can review the configs, and then commit them.
