@@ -12,9 +12,9 @@ retrieve,
    levtype=sfc,
    param=10u/10v/2d/2t,
    grid=O96,
-   date=20241231/20250101,
+   date=20161231/20170101,
    time=1800/0000,
-   target=global.grib
+   target=input.grib
 
 # Pressure-level fields
 retrieve,
@@ -25,25 +25,27 @@ retrieve,
    param=q/t,
    level=50/100,
    grid=O96,
-   date=20241231/20250101,
+   date=20161231/20170101,
    time=1800/0000,
-   target=global.grib
+   target=input.grib
 
 # Accumulations (cp, tp)
 retrieve,
    class=ea,
    expver=0001,
+   type=fc,
    levtype=sfc,
    param=cp/tp,
    grid=O96,
-   date=20241231/20250101,
-   time=0000/0600/1200/1800,
-   step=0/6,
-   target=global.grib
+   date=20161231/20170101,
+   time=0600/1800,
+   step=6,
+   target=input.grib
 EOF
 
 $MARS_CMD global_request.txt
-mv global.grib $OUTPUT_PATH/global.grib
+ls -lha
+mv --verbose input.grib $OUTPUT_PATH/global.grib
 
 ################################################################################
 
@@ -59,9 +61,9 @@ retrieve,
    levtype=pl,
    param=r/t,
    level=50/100,
-   date=20241231/20250101,
+   date=20161231/20170101,
    time=1800/0000,
-   target=lam.grib
+   target=input.grib
 
 # Surface fields
 retrieve,
@@ -71,25 +73,26 @@ retrieve,
    origin=se-al-ec,
    levtype=sfc,
    param=sp/msl,
-   date=20241231/20250101,
+   date=20161231/20170101,
    time=1800/0000,
-   target=lam.grib
+   target=input.grib
 
 # Accumulations (tp, sf) — these need step-based retrieval
 # for 6h accumulations (the dataset config uses accumulate with period=6h)
 retrieve,
    class=rr,
+    type=fc,
    stream=oper,
    origin=se-al-ec,
    levtype=sfc,
    param=tp/sf,
-   date=20241231/20250101,
+   date=20161231/20170101,
    time=0000/0600/1200/1800,
-   step=0/6,
-   target=lam.grib
+   step=6,
+   target=input.grib
 EOF
 
 $MARS_CMD lam_request.txt
-mv lam.grib $OUTPUT_PATH/lam.grib
+mv --verbose input.grib $OUTPUT_PATH/lam.grib
 
 echo "Retrieval complete"
