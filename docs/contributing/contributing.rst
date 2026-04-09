@@ -95,6 +95,56 @@ before enabling automated checks.
 #. Once approved, the Pull Request will be merged into the appropiate
    branch according to the :ref:`merging-guidelines`
 
+.. _inactive-issue-process:
+
+*************************
+ Inactive Issue Process
+*************************
+
+To keep our issue tracker focused on active work, we use an automated stale bot that marks and closes inactive issues and pull requests.
+
+
+How It Works
+------------
+
+- **Issues**: After 90 days of inactivity, labeled as ``inactive``; closed after 10 more days
+- **PRs**: After 90 days of inactivity, labeled as ``inactive``; closed after 10 more days
+
+If during the grace period of 10 days, a maintainer or contributor provides an update on the issue or PR to indicate that it is still being worked on, the timer is reset and the issue or PR is not closed.
+
+Exempt Labels
+-------------
+
+Some issues and PRs never go inactive:
+
+**Issues:**
+
+- ``good first issue`` - Newcomer-friendly issues
+- ``help wanted`` - Issues seeking contributions
+- ``roadmap`` - Planned features
+- ``known-issue`` - Confirmed issues not yet fixed
+
+If your issue is still actively being worked on but may take longer to resolve, you can apply the known-issue label to indicate that it should not be treated as inactive.
+We ask contributors to use this mechanism in good faith and to not arbitrarily assign labels to circumvent the bot.
+
+**PRs:**
+
+- ``autorelease: pending`` - Release automation PRs
+
+Preventing Stale Status
+-----------------------
+
+To keep your issue or PR active:
+
+1. Add a comment - any activity resets the timer
+2. Request an exempt label from a maintainer
+3. Provide status updates
+
+If Closed by Mistake
+--------------------
+If your issue was closed but is still relevant, simply comment to reopen it or create a new issue. Contact maintainers if you believe the closure was incorrect.
+
+
 *****************
  Code of conduct
 *****************

@@ -13,11 +13,14 @@ dates:
   start: 2017-01-01 6:00:00
   end: 2017-01-10 18:00:00
   frequency: 6h
+<<<<<<< HEAD
 
 build:
   # group_by moved here due to
   # > TypeError: anemoi.datasets.dates.groups.Groups() got multiple values for keyword argument 'group_by'
   group_by: weekly
+=======
+>>>>>>> main
 
 input:
   join:
@@ -31,6 +34,10 @@ input:
       - 10v
       - 2d
       - 2t
+      - lsm
+      - sdor
+      - slor
+      - z
   - mars:
       class: ea
       expver: '0001'
@@ -65,3 +72,6 @@ input:
       - sin_local_time
       - insolation
       template: ${input.join.0.mars}
+
+build:
+  group_by: weekly

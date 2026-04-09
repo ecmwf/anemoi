@@ -69,26 +69,8 @@ input:
       - cos_solar_zenith_angle
       template: ${input.join.0.mars}
 
-output:
-  chunking:
-    dates: 1
-    ensembles: 1
-  dtype: float32
-  ensemble_dimension: 2
-  flatten_grid: true
-  order_by:
-  - valid_datetime
-  - param_level
-  - number
-  statistics: param_level
-
-statistics:
-  allow_nans: []
-
 build:
   additions: true
   group_by: monthly
   use_grib_paramid: false
   variable_naming: default
-  remapping:
-    param_level: '{param}_{levelist}'
