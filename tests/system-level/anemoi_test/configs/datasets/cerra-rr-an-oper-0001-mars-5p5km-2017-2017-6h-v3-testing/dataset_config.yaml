@@ -74,3 +74,6 @@ build:
   group_by: monthly
   use_grib_paramid: false
   variable_naming: default
+
+build:
+  group_by: monthly
