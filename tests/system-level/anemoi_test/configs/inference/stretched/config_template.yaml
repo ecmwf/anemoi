@@ -7,6 +7,7 @@ input:
         reorder: sort
       - dataset: $GLOBAL_DATASET
         reorder: sort
+    min_distance_km: 0
     adjust: all
 output:
   netcdf: output.nc
