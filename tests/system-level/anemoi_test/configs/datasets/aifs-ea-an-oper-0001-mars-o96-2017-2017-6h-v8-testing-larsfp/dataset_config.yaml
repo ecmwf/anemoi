@@ -1,0 +1,68 @@
+name: aifs-ea-an-oper-0001-mars-o96-2017-2017-6h-v8-testing-larsfp
+
+description: 'Subset of aifs-ea-an-oper-0001-mars-o96-1979-2023-6h-v8,
+  for purposes of system-level testing, with reduced time range and parameters.
+  Data from 2017, resolution O96. From ERA5 data, deterministic.
+  Variables aligned with cerra-rr-an-oper-0001-mars-5p5km-2017-2017-6h-v3-testing.
+  '
+
+attribution: ECMWF
+
+licence: CC-BY-4.0
+
+dates:
+  start: 2017-01-01 6:00:00
+  end: 2017-01-10 18:00:00
+  frequency: 6h
+
+build:
+  group_by: weekly
+  additions: true
+  use_grib_paramid: false
+  variable_naming: default
+  remapping:
+    param_level: '{param}_{levelist}'
+
+input:
+  join:
+  - mars:
+      class: ea
+      expver: '0001'
+      grid: o96
+      levtype: sfc
+      param:
+      - sp
+      - msl
+  - mars:
+      class: ea
+      expver: '0001'
+      grid: o96
+      level:
+      - 50
+      - 100
+      levtype: pl
+      param:
+      - r
+      - t
+  - accumulate:
+      period: 6h
+      availability: auto
+      source:
+        mars:
+          class: ea
+          expver: '0001'
+          grid: o96
+          param:
+          - tp
+  - constants:
+      param:
+      - cos_latitude
+      - cos_longitude
+      - sin_latitude
+      - sin_longitude
+      - cos_julian_day
+      - cos_local_time
+      - sin_julian_day
+      - sin_local_time
+      - cos_solar_zenith_angle
+      template: ${input.join.0.mars}
