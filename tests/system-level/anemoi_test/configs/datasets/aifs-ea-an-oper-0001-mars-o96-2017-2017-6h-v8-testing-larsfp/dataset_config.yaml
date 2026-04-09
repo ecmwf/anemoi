@@ -15,14 +15,6 @@ dates:
   end: 2017-01-10 18:00:00
   frequency: 6h
 
-build:
-  group_by: weekly
-  additions: true
-  use_grib_paramid: false
-  variable_naming: default
-  remapping:
-    param_level: '{param}_{levelist}'
-
 input:
   join:
   - mars:
@@ -66,3 +58,11 @@ input:
       - sin_local_time
       - cos_solar_zenith_angle
       template: ${input.join.0.mars}
+
+build:
+  group_by: weekly
+  additions: true
+  use_grib_paramid: false
+  variable_naming: default
+  remapping:
+    param_level: '{param}_{levelist}'
