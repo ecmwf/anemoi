@@ -1,10 +1,13 @@
 checkpoint: $CHECKPOINT_PATH
+date: 2017-01-02T00:00:00
 input:
-  cutout:
-    - lam_0:
-        grib: lam.grib
-    - global:
-        grib: global.grib
+  dataset:
+    cutout:
+      - dataset: $LAM_DATASET
+        reorder: sort
+      - dataset: $GLOBAL_DATASET
+        reorder: sort
+    adjust: all
 output:
   netcdf: output.nc
 lead_time: 48h
