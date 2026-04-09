@@ -29,7 +29,6 @@ data:
       - sin_local_time
       - sin_latitude
       - sin_longitude
-      - cos_solar_zenith_angle
       diagnostic:
       - tp
       processors:
@@ -48,7 +47,6 @@ data:
             - sin_local_time
             - sin_latitude
             - sin_longitude
-            - cos_solar_zenith_angle
 
 # =============================================================================
 # DATALOADER — cutout dataset, small batches for testing
