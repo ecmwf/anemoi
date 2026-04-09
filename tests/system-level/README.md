@@ -5,6 +5,20 @@ The `anemoi_test` suite provides system-level testing for the anemoi packages, c
 For details on adding a test case or triggering suite deployment via GitHub, see the main
 [Testing Documentation](https://anemoi.readthedocs.io/en/latest/contributing/testing.html).
 
+## Updating Training Configs
+
+The training configs for the global use case and for the lam use case are based on the configuration of the respective integration tests in training. We use full configs in the system-level test suite in order to track
+changes in the configurations.
+
+There is a helper script in anemoi-training to update these configs. It requires an up to date training environment.
+Check out the branch in anemoi-core based on which you would like to update the configs. You'll need to
+provide the path to your local anemoi repo, and can run the script like so:
+
+```
+python training/tests/integration/scripts/update_slt_configs.py PATH_TO_YOUR_ANEMOI_REPO
+```
+
+It will update the training config files in the system-level tests folder, according to the path that you provided. You can review the configs, and then commit them.
 
 ## Running Tests Locally During Development
 
