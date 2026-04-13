@@ -215,6 +215,7 @@ class InferenceConfigTask(pf.Task):
         script.environment_variable("CHECKPOINT_FILE", checkpoint_file)
         script.environment_variable("CONFIG_TEMPLATE", str(config_template_path))
         script.environment_variable("OUTPUT_PATH", str(output_path))
+        script.environment_variable("RESULTS_DIR_DATASETS", RESULTS_DIR_DATASETS)
         super().__init__(name="generate_config_" + folder, script=script)
 
 

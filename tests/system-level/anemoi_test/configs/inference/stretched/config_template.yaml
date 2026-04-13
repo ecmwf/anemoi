@@ -1,0 +1,14 @@
+checkpoint: $CHECKPOINT_PATH
+date: 2017-01-02T00:00:00
+input:
+  dataset:
+    cutout:
+      - dataset: $LAM_DATASET
+        reorder: sort
+      - dataset: $GLOBAL_DATASET
+        reorder: sort
+    min_distance_km: 0
+    adjust: all
+output:
+  netcdf: output.nc
+lead_time: 48h

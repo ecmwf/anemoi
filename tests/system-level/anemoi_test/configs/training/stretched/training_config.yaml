@@ -1,0 +1,206 @@
+# Stretched grid ensemble training config
+defaults:
+- data: zarr
+- dataloader: native_grid
+- diagnostics: evaluation
+- graph: stretched_grid
+- model: graphtransformer_ens
+- training: ensemble
+- _self_
+
+config_validation: True
+
+# =============================================================================
+# DATA — match variables in our cutout dataset
+# The cutout exposes: cos_julian_day, cos_latitude, cos_local_time,
+# cos_longitude, sin_julian_day, sin_latitude, sin_local_time,
+# sin_longitude, t_100, t_50, tp
+# =============================================================================
+data:
+  frequency: 6h
+  datasets:
+    data:
+      forcing:
+      - cos_julian_day
+      - cos_local_time
+      - cos_latitude
+      - cos_longitude
+      - sin_julian_day
+      - sin_local_time
+      - sin_latitude
+      - sin_longitude
+      diagnostic:
+      - tp
+      processors:
+        normalizer:
+          config:
+            std:
+            - tp
+            min-max: null
+            max: null
+            none:
+            - cos_julian_day
+            - cos_local_time
+            - cos_latitude
+            - cos_longitude
+            - sin_julian_day
+            - sin_local_time
+            - sin_latitude
+            - sin_longitude
+
+# =============================================================================
+# DATALOADER — cutout dataset, small batches for testing
+# =============================================================================
+dataloader:
+  dataset_config:
+    dataset:
+      cutout:
+        - dataset: ${system.input.dataset}
+          reorder: sort
+        - dataset: ${system.input.forcing_dataset}
+      min_distance_km: 0
+      adjust: all
+    frequency: ${data.frequency}
+    drop: []
+
+  num_workers:
+    training: 2
+    validation: 2
+    test: 2
+  batch_size:
+    training: 2
+    validation: 2
+    test: 4
+  limit_batches:
+    training: 2
+    validation: 2
+    test: 20
+  prefetch_factor: 2
+  validation_rollout: 1
+
+  grid_indices:
+    datasets:
+      data:
+        _target_: anemoi.training.data.grid_indices.FullGrid
+        nodes_name: ${graph.data}
+
+  training:
+    datasets:
+      data:
+        dataset_config: ${dataloader.dataset_config}
+        start: null
+        end: 2017-01-07
+  validation:
+    datasets:
+      data:
+        dataset_config: ${dataloader.dataset_config}
+        start: 2017-01-08
+        end: 2021
+  test:
+    datasets:
+      data:
+        dataset_config: ${dataloader.dataset_config}
+        start: 2022
+        end: null
+
+# =============================================================================
+# SYSTEM
+# =============================================================================
+system:
+  hardware:
+    accelerator: auto
+    num_gpus_per_node: 1
+    num_nodes: 1
+    num_gpus_per_model: 1
+    num_gpus_per_ensemble: 1
+  input:
+    root: dummy_path
+    dataset: ${system.input.root}/cerra-rr-an-oper-0001-mars-5p5km-2017-2017-6h-v3-testing.zarr
+    forcing_dataset: ${system.input.root}/aifs-ea-an-oper-0001-mars-o96-2017-2017-6h-v8-testing.zarr
+    graph: ${system.output.root}graphs/stretched.pt
+    truncation: null
+    truncation_inv: null
+    warm_start: null
+    loss_matrices_path: ""
+  output:
+    root: ${oc.env:PWD}/tmp_output/
+    logs:
+      root: logs
+      wandb: wandb
+      mlflow: mlflow
+    checkpoints:
+      root: checkpoint
+      every_n_epochs: anemoi-by_epoch-epoch_{epoch:03d}-step_{step:06d}
+      every_n_train_steps: anemoi-by_step-epoch_{epoch:03d}-step_{step:06d}
+      every_n_minutes: anemoi-by_time-epoch_{epoch:03d}-step_{step:06d}
+    plots: plots
+    profiler: profiler
+
+# =============================================================================
+# MODEL — use AnemoiEnsModelEncProcDec from the graphtransformer_ens default.
+# Do NOT override model.model — the default provides the correct ensemble model
+# with noise injection and ConditionalLayerNorm.
+# Only override sizes for testing.
+# =============================================================================
+model:
+  num_channels: 16
+  keep_batch_sharded: False
+  trainable_parameters:
+    data: 0
+    hidden: 0
+    data2hidden: 0
+    hidden2data: 0
+    hidden2hidden: 0
+  # output_mask:
+  #   _target_: anemoi.training.utils.masks.Boolean1DMask
+  #   attribute_name: cutout_mask
+  processor:
+    num_layers: 4
+    num_heads: 4
+  encoder:
+    num_heads: 4
+  decoder:
+    num_heads: 4
+
+# =============================================================================
+# DIAGNOSTICS — minimal
+# =============================================================================
+diagnostics:
+  plot:
+    callbacks: []
+  log:
+    mlflow:
+      enabled: False
+
+# =============================================================================
+# GRAPH — stretched grid, need data/hidden names for cross-references
+# =============================================================================
+graph:
+  overwrite: True
+  data: "data"
+  hidden: "hidden"
+  nodes:
+    hidden:
+      node_builder:
+        lam_resolution: 10
+        global_resolution: 7
+
+# =============================================================================
+# TRAINING — ensemble with KCRPS loss (from default).
+# Do NOT override training_loss — the default MultiscaleLossWrapper +
+# AlmostFairKernelCRPS validates cleanly against MultiScaleLossSchema.
+# =============================================================================
+training:
+  ensemble_size_per_device: 2
+  max_epochs: 2
+  max_steps: 10000
+  validation_metrics: {}
+  lr:
+    rate: 3.75e-5
+    min: 8.0e-6
+    warmup: 1000
+  metrics:
+    datasets:
+      data:
+        - t_50
+        - t_100

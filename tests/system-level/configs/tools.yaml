@@ -65,7 +65,7 @@ tools:
         depends: [python]
       inference_env:
         type: venv
-        packages: [anemoi_inference, anemoi_models, anemoi_transform]
+        packages: [anemoi_inference, anemoi_models, anemoi_transform, anemoi_datasets]
         depends: [python]
 
   # --------Environment variables -----------------------------------------
