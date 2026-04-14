@@ -104,7 +104,7 @@ Examples of PRs that should be labeled ``ATS Approval Needed``:
 Examples of PRs that can be labeled ``ATS Approval Not Needed``:
 ----------------------------------------------------------------
 
--  Hotfixes and general bug fixes [*]_
+-  Hotfixes and general bug fixes [1]_
 
 -  A minor new feature such as:
 
@@ -114,11 +114,11 @@ Examples of PRs that can be labeled ``ATS Approval Not Needed``:
    -  New filter in `anemoi-transform`
    -  New grid types in `anemoi-graphs`
 
--  Extensions to testing or CI infrastructure [*]_
+-  Extensions to testing or CI infrastructure [1]_
 
--  PRs addressing technical debt [*]_
+-  PRs addressing technical debt [1]_
 
-.. [*]
+.. [1]
 
    Assuming those do not imply any breaking changes or dependency changes
    as explained above
