@@ -16,8 +16,8 @@ through the Anemoi framework.
 *********************************************
 
 If you would like to make predictions with a model that has already been
-trained, e.g. AIFS Single 1. See the :ref:`anemoi-inference getting
-started guide <anemoi-inference:usage-getting-started>`.
+trained, e.g. AIFS Single 1. See the :ref:`anemoi-inference quickstart
+guide <anemoi-inference:usage-quickstart>`.
 
 ********************************************
  Training a new model through configuration
@@ -34,8 +34,8 @@ of building blocks which already exist in the Anemoi codebase. See the
 
 If you would like to go beyond training a model with a sample dataset,
 e.g. building a new dataset to train a model using new data. See the
-:ref:`anemoi-datasets getting started guide
-<anemoi-datasets:usage-getting-started>`.
+:ref:`anemoi-datasets guide for using an existing dataset
+<anemoi-datasets:using-introduction>`.
 
 ************************
  Contributing use-cases
