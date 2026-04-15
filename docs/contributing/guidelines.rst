@@ -269,12 +269,12 @@ When submitting Pull Requests (PRs), please follow these guidelines:
  Pull Request Merging Guidelines
 *********************************
 
-Once a PR has been reviewed and the appropriate label is in place, the
+Once a PR has been reviewed, approved, and the appropriate label is in place, the
 following merging rules apply:
 
 -  For PRs labeled ``ATS Approval Not Needed``: The PR can be merged by
-   the reviewer once it has been approved, provided the reviewer is not
-   the original contributor.
+   the author of the PR. For external contributors, who cannot merge their own PRs,
+   the PR is merged by a reviewer, after the author has stated that the PR is ready to be merged.
 
 -  For PRs labeled ``ATS Approved``: These PRs will be merged by the
    ``@anemoisecurity`` group after they have been reviewed in the ATS
