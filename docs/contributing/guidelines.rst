@@ -272,8 +272,9 @@ When submitting Pull Requests (PRs), please follow these guidelines:
 Once a PR has been reviewed, approved, and the appropriate label is in place, the
 following merging rules apply:
 
--  For PRs labeled ``ATS Approval Not Needed``: The PR can be merged by
-   the author of the PR. For external contributors, who cannot merge their own PRs,
+-  For PRs labeled ``ATS Approval Not Needed``: The PR is merged by
+   the author of the PR, unless otherwise stated.
+   For external contributors, who cannot merge their own PRs,
    the PR is merged by a reviewer, after the author has stated that the PR is ready to be merged.
 
 -  For PRs labeled ``ATS Approved``: These PRs will be merged by the
