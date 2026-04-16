@@ -269,23 +269,45 @@ When submitting Pull Requests (PRs), please follow these guidelines:
  Pull Request Merging Guidelines
 *********************************
 
-Once a PR has been reviewed, approved, and the appropriate label is in place, the
-following merging rules apply:
+General Rule
+============
 
--  For PRs labeled ``ATS Approval Not Needed``: The PR is merged by
-   the author of the PR, unless otherwise stated.
-   For external contributors, who cannot merge their own PRs,
-   the PR is merged by a reviewer, after the author has stated that the PR is ready to be merged.
+Once a PR has been reviewed, approved, and the appropriate label is in place,
+it can be merged by either the contributor or by the reviewer,
+if the contributor has explicitly stated that the PR is ready to be merged.
 
--  For PRs labeled ``ATS Approved``: These PRs will be merged by the
-   ``@anemoisecurity`` group after they have been reviewed in the ATS
-   meeting and marked with the ``ATS Approved`` label.
+Exceptions and Special Cases
+============================
+
+**Label: ATS Approval Needed**
+
+- Must not be merged until reviewed in the ATS
+
+- Label must be updated to ATS Approved before merging
+
+**Multiple Reviewers Requested**
+
+- The merging reviewer must confirm that all required approvals are received,
+  or that each requested reviewer has given explicit approval
+
+**No Merge Permissions**
+
+- If you can't merge your own approved PR, ask a reviewer or tag @anemoisecuritygroup
+
 
 .. note::
 
    PRs that do not have either label **must not be merged**. When in
    doubt, apply the ``ATS Approval Needed`` label or consult
    ``@anemoisecurity`` for guidance.
+
+.. note::
+
+   This is a highly collaborative project, where explicit communication helps
+   reduce conflicts and misunderstandings. When in doubt, ask before merging. Reach
+   out via GitHub comments or other communication channels to confirm with
+   contributors and reviewers. If there is uncertainty or conflict, tag the
+   ``@anemoisecurity`` group for guidance.
 
 ***************
  Documentation
