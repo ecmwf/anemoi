@@ -3,14 +3,13 @@
 # =========================================
 # source_repo: anemoi-core
 # branch: main
-# commit: acf58b8af4b2adaae0c3328b1c255d7687003a8f
+# commit: 865118444353a55160816e56d2b4889be50c3962
 # uncommitted_changes: False
-# generated_at: 2026-04-10T09:18:39.913795+00:00
+# generated_at: 2026-04-22T08:37:45.750336+00:00
 # =========================================
 data:
   format: zarr
   frequency: 6h
-  timestep: 6h
   datasets:
     data:
       forcing:
@@ -88,7 +87,6 @@ dataloader:
         start: null
         end: '2017-01-08 12:00:00'
         trajectory: ${dataloader.model_run_info}
-  validation_rollout: 1
   validation:
     datasets:
       data:
@@ -165,7 +163,12 @@ diagnostics:
         - 54.0
         - 135.0
     callbacks: []
-  callbacks: []
+  callbacks:
+  - _target_: anemoi.training.diagnostics.callbacks.evaluation.RolloutEval
+    rollout:
+    - 1
+    - 2
+    every_n_batches: 4
   benchmark_profiler:
     memory:
       enabled: true
@@ -390,6 +393,16 @@ model:
   - _target_: anemoi.models.layers.bounding.ReluBounding
     variables:
     - tp
+task:
+  _target_: anemoi.training.tasks.Forecaster
+  multistep_input: 3
+  multistep_output: 2
+  timestep: 6H
+  rollout:
+    start: 1
+    epoch_increment: 0
+    maximum: 1
+  validation_rollout: 2
 training:
   scalers:
     datasets:
@@ -419,17 +432,14 @@ training:
           _target_: anemoi.training.losses.scalers.NaNMaskScaler
         stdev_tendency:
           _target_: anemoi.training.losses.scalers.StdevTendencyScaler
-          timestep: ${data.timestep}
         var_tendency:
           _target_: anemoi.training.losses.scalers.VarTendencyScaler
-          timestep: ${data.timestep}
         node_weights:
           _target_: anemoi.training.losses.scalers.GraphNodeAttributeScaler
           nodes_attribute_name: area_weight
           norm: unit-sum
         time_steps:
           _target_: anemoi.training.losses.scalers.UniformTimeStepScaler
-          multistep_output: ${training.multistep_output}
         output_steps:
           _target_: anemoi.training.losses.scalers.TimeStepScaler
           norm: unit-sum
@@ -460,8 +470,6 @@ training:
     tendencies: true
   deterministic: false
   precision: 16-mixed
-  multistep_input: 3
-  multistep_output: 2
   accum_grad_batches: 1
   num_sanity_val_steps: 6
   gradient_clip:
@@ -470,7 +478,7 @@ training:
   swa:
     enabled: false
     lr: 0.0001
-  model_task: anemoi.training.train.tasks.GraphForecaster
+  training_method: anemoi.training.train.methods.SingleTraining
   strategy:
     _target_: anemoi.training.distributed.strategy.DDPGroupStrategy
     num_gpus_per_model: ${system.hardware.num_gpus_per_model}
@@ -514,10 +522,6 @@ training:
       - t_850
       - u_850
       - v_850
-  rollout:
-    start: 1
-    epoch_increment: 0
-    max: 1
   max_epochs: 2
   max_steps: 150000
   submodules_to_freeze: []
