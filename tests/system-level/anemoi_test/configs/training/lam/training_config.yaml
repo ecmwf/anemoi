@@ -2,10 +2,10 @@
 # AUTO-GENERATED FILE - DO NOT EDIT MANUALLY
 # =========================================
 # source_repo: anemoi-core
-# branch: test/update-slt-config-script
-# commit: 16003415767f7fa7935a04e0509f2b58e1faeb5b
+# branch: main
+# commit: 865118444353a55160816e56d2b4889be50c3962
 # uncommitted_changes: False
-# generated_at: 2026-04-22T08:12:16.247063+00:00
+# generated_at: 2026-04-22T08:37:45.773021+00:00
 # =========================================
 data:
   format: zarr
