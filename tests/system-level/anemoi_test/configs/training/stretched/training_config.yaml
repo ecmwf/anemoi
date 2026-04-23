@@ -171,6 +171,7 @@ diagnostics:
   log:
     mlflow:
       enabled: False
+      tracking_uri: null
 
 # =============================================================================
 # GRAPH — stretched grid, need data/hidden names for cross-references
@@ -195,10 +196,6 @@ training:
   max_epochs: 2
   max_steps: 10000
   validation_metrics: {}
-  lr:
-    rate: 3.75e-5
-    min: 8.0e-6
-    warmup: 1000
   metrics:
     datasets:
       data:
