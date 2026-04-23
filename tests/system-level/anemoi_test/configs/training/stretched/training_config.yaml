@@ -6,6 +6,7 @@ defaults:
 - graph: stretched_grid
 - model: graphtransformer_ens
 - training: ensemble
+- task: forecaster
 - _self_
 
 config_validation: True
