@@ -70,37 +70,37 @@ extensions = [
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "'**.ipynb_checkpoints'"]
 
 intersphinx_mapping = {
-    "python": ("https://python.readthedocs.io/en/latest", None),
+    "python": ("https://docs.python.org/3/", None),
     "anemoi-utils": (
-        "https://anemoi-utils.readthedocs.io/en/latest/",
+        "https://anemoi.readthedocs.io/projects/utils/en/latest/",
         ("../../anemoi-utils/docs/_build/html/objects.inv", None),
     ),
     "anemoi-datasets": (
-        "https://anemoi-datasets.readthedocs.io/en/latest/",
+        "https://anemoi.readthedocs.io/projects/datasets/en/latest/",
         ("../../anemoi-datasets/docs/_build/html/objects.inv", None),
     ),
     "anemoi-models": (
-        "https://anemoi-models.readthedocs.io/en/latest/",
+        "https://anemoi.readthedocs.io/projects/models/en/latest/",
         ("../../anemoi-models/docs/_build/html/objects.inv", None),
     ),
     "anemoi-training": (
-        "https://anemoi-training.readthedocs.io/en/latest/",
+        "https://anemoi.readthedocs.io/projects/training/en/latest/",
         ("../../anemoi-training/docs/_build/html/objects.inv", None),
     ),
     "anemoi-inference": (
-        "https://anemoi-inference.readthedocs.io/en/latest/",
+        "https://anemoi.readthedocs.io/projects/inference/en/latest/",
         ("../../anemoi-inference/docs/_build/html/objects.inv", None),
     ),
     "anemoi-graphs": (
-        "https://anemoi-graphs.readthedocs.io/en/latest/",
+        "https://anemoi.readthedocs.io/projects/graphs/en/latest/",
         ("../../anemoi-graphs/docs/_build/html/objects.inv", None),
     ),
     "anemoi-registry": (
-        "https://anemoi-registry.readthedocs.io/en/latest/",
+        "https://anemoi.readthedocs.io/projects/registry/en/latest/",
         ("../../anemoi-registry/docs/_build/html/objects.inv", None),
     ),
     "anemoi-transform": (
-        "https://anemoi-transform.readthedocs.io/en/latest/",
+        "https://anemoi.readthedocs.io/projects/transform/en/latest/",
         ("../../anemoi-transform/docs/_build/html/objects.inv", None),
     ),
 }
