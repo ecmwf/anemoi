@@ -3,9 +3,9 @@
 # =========================================
 # source_repo: anemoi-core
 # branch: main
-# commit: 865118444353a55160816e56d2b4889be50c3962
+# commit: 8713d1243df0a4d51249227b1100d42c631e5415
 # uncommitted_changes: False
-# generated_at: 2026-04-22T08:37:45.750336+00:00
+# generated_at: 2026-04-28T08:12:10.154870+00:00
 # =========================================
 data:
   format: zarr
@@ -475,9 +475,6 @@ training:
   gradient_clip:
     val: 32.0
     algorithm: value
-  swa:
-    enabled: false
-    lr: 0.0001
   training_method: anemoi.training.train.methods.SingleTraining
   strategy:
     _target_: anemoi.training.distributed.strategy.DDPGroupStrategy
