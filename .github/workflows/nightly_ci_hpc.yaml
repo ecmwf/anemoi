@@ -49,3 +49,33 @@ jobs:
       troika_user: ${{ secrets.HPC_SYSTEM_TEST_USER }}
       ecflow_host: ${{ secrets.HPC_SYSTEM_TEST_HOST }}
       ecflow_port: ${{ secrets.HPC_SYSTEM_TEST_PORT }}
+
+  notify-failure:
+    if: failure()
+    runs-on: ubuntu-latest
+    needs: system_level_test
+    name: Notify failure
+    steps:
+      - uses: jdcargile/ms-teams-notification@v1.4
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI_TEST }}
+          notification-summary: ❌ Nightly anemoi system level tests failed!
+          notification-color: dc3545
+          timezone: Europe/Paris
+          verbose-logging: true
+
+  notify-success:
+    if: success()
+    runs-on: ubuntu-latest
+    needs: system_level_test
+    name: Notify success
+    steps:
+      - uses: jdcargile/ms-teams-notification@v1.4
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI_TEST }}
+          notification-summary: ✅ Nightly anemoi system level tests succeeded!
+          notification-color: 17a2b8
+          timezone: Europe/Paris
+          verbose-logging: true
