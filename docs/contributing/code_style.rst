@@ -88,7 +88,8 @@ Place new files in the appropriate package directory:
 
 .. note::
 
-Utility Functions Organization:
+   Utility Functions Organization:
+
    -  Use ``utils.py`` only for package-specific helper functions that
       don't fit in other modules.
 
