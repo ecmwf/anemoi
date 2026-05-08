@@ -40,7 +40,6 @@ runs:
 
           # Load modules of interest
           module load ecflow
-          module load wellies
 
           # Clone the repository
           PACKAGE_NAME=anemoi
