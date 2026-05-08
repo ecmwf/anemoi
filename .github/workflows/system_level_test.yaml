@@ -108,7 +108,7 @@ jobs:
             module load wellies/1.2.0
 
             mkdir -p /scratch/${{ secrets.troika_user }}/anemoi_tests/${{ inputs.suite_name }}
-            /home/mlx/bin/tracksuite-print /anemoi_tests/${{ inputs.suite_name }} --host ${{ secrets.ecflow_host }} -f html &> /scratch/${{ secrets.troika_user }}/anemoi_tests/${{ inputs.suite_name }}/summary.md
+            /home/mlx/bin/tracksuite-print /anemoi_tests/${{ inputs.suite_name }} --host ${{ secrets.ecflow_host }} --port ${{ secrets.ecflow_port }} -f html |& tee /scratch/${{ secrets.troika_user }}/anemoi_tests/${{ inputs.suite_name }}/summary.md
           sbatch_options: |
             #SBATCH --job-name=anemoi_test_print_results
             #SBATCH --time=00:10:00
