@@ -1,9 +1,13 @@
 # An ugly workaround for lack of variable substitution in anemoi-datasets
 # create. Create a copy of dataset_config.yaml, with a replaced variable
 # ($MEPS_20220101) for path to nc files and run using that file.
+#
+# After creation, patch variables_metadata to align with the ECMWF dataset.
 anemoi_command: >-
   bash -c 'export MEPS_202201="/perm/nor1427/meps_dataset_202201/*.nc" &&
   TMP=$(mktemp --suffix=.yaml) &&
   envsubst "\$MEPS_202201" < "$1" > "$TMP" &&
   anemoi-datasets create "$TMP" "$2" "$3";
-  RET=$?; rm -f "$TMP"; exit $RET' --
+  RET=$?; rm -f "$TMP";
+  [ $RET -eq 0 ] && python "$(dirname "$1")/patch_dataset.py" "$2";
+  exit $RET' --
