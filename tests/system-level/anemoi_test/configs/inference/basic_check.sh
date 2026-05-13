@@ -4,7 +4,7 @@ if [[ ! -d "$OUTPUT_PATH" ]]; then
 fi
 cd "$OUTPUT_PATH"
 
-if [[ ! -f output.grib ]]; then
+if [[ ! -f output.grib  && ! -f output.nc ]]; then
   echo "❌ Output file not found: output.grib"
   exit 1
 fi
