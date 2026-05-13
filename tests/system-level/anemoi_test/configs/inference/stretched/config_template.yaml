@@ -1,5 +1,5 @@
 checkpoint: $CHECKPOINT_PATH
-date: 2022-01-05T06:00:00
+date: 2022-01-05T00:00:00
 input:
   dataset:
     cutout:
