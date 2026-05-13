@@ -88,11 +88,15 @@ before enabling automated checks.
 #. After an initial review, a maintainer will enable automated checks to
    run on the Pull Request.
 
+#. It is the sole responsibility of the respective contributor to keep the PR
+   in sync with the target branch (e.g., :code:`git pull origin main`)
+   and to address any merge conflicts that may arise.
+
 #. Reviewers may leave feedback or request changes. To confirm that
    feedback has been addressed, ask reviewers to mark their comments as
    resolved.
 
-#. Once approved, the Pull Request will be merged into the appropiate
+#. Once approved, the Pull Request will be merged into the appropriate
    branch according to the :ref:`merging-guidelines`
 
 .. _inactive-issue-process:
