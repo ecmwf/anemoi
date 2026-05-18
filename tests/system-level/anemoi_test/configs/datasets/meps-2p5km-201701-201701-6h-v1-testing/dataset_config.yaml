@@ -1,13 +1,15 @@
-name: meps-2p5km-202201-202201-6h-v1-testing
+name: meps-2p5km-201701-201701-6h-v1-testing
 
 description: 'MetCoOp Ensemble Prediction System
+  These data are from 2022, but changed to appear from 2017, to match aifs dataset.
+  For CI testing use only!
   '
 
 attribution: MEPS
 
 dates:
-  start: 2022-01-01T00:00:00
-  end: 2022-01-05T00:00:00
+  start: 2017-01-01T00:00:00
+  end: 2017-01-05T00:00:00
   frequency: 6h
 
 build:
@@ -20,7 +22,7 @@ input:
   join:
       - netcdf:
           param: [2t, 2d, skt, tp, 10u, 10v, z, lsm, lcc, mcc, hcc, tcc, 10fg, ssrd, strd, tcw, sp, msl, t_50, q_50, u_50, v_50, w_50, z_50, t_100, q_100, u_100, v_100, w_100, z_100, t_150, q_150, u_150, v_150, w_150, z_150, t_200, q_200, u_200, v_200, w_200, z_200, t_250, q_250, u_250, v_250, w_250, z_250, t_300, q_300, u_300, v_300, w_300, z_300, t_400, q_400, u_400, v_400, w_400, z_400, t_500, q_500, u_500, v_500, w_500, z_500, t_700, q_700, u_700, v_700, w_700, z_700, t_850, q_850, u_850, v_850, w_850, z_850, t_925, q_925, u_925, v_925, w_925, z_925, t_1000, q_1000, u_1000, v_1000, w_1000, z_1000, vis, fog, 10si, cbh]
-          path: $MEPS_202201
+          path: $MEPS_201701
       - constants:
           template: ${input.join.0.netcdf}
           param:

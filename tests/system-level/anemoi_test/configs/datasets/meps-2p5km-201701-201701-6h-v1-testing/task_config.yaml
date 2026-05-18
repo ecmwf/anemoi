@@ -1,12 +1,12 @@
 # An ugly workaround for lack of variable substitution in anemoi-datasets
 # create. Create a copy of dataset_config.yaml, with a replaced variable
-# ($MEPS_202201) for path to nc files and run using that file.
+# ($MEPS_201701) for path to nc files and run using that file.
 #
 # After creation, patch variables_metadata to align with the ECMWF dataset.
 anemoi_command: >-
-  bash -c 'export MEPS_202201="/perm/nor1427/meps_dataset_202201/*.nc" &&
+  bash -c 'export MEPS_201701="/perm/nor1427/meps_testdataset_201701/*.nc" &&
   TMP=$(mktemp --suffix=.yaml) &&
-  envsubst "\$MEPS_202201" < "$1" > "$TMP" &&
+  envsubst "\$MEPS_201701" < "$1" > "$TMP" &&
   anemoi-datasets create "$TMP" "$2" "$3";
   RET=$?; rm -f "$TMP";
   [ $RET -eq 0 ] && python -c "import sys,zarr; store=zarr.open(sys.argv[1],mode=\"r+\"); meta=dict(store.attrs.get(\"variables_metadata\",{})); meta[\"tp\"]={\"mars\":{\"levtype\":\"sfc\",\"param\":\"tp\"},\"process\":\"accumulation\",\"period\":[\"0d\",\"6h\"]}; meta[\"sp\"]={\"mars\":{\"levtype\":\"sfc\",\"param\":\"sp\"}}; meta[\"msl\"]={\"mars\":{\"levtype\":\"sfc\",\"param\":\"msl\"}}; meta[\"t_50\"]={\"mars\":{\"levtype\":\"pl\",\"levelist\":50,\"param\":\"t\"}}; meta[\"t_100\"]={\"mars\":{\"levtype\":\"pl\",\"levelist\":100,\"param\":\"t\"}}; store.attrs[\"variables_metadata\"]=meta; print(\"Patched\",sys.argv[1])" "$2";
