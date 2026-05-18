@@ -89,18 +89,18 @@ dataloader:
       data:
         dataset_config: ${dataloader.dataset_config}
         start: null
-        end: 2022-01-02
+        end: 2017-01-02
   validation:
     datasets:
       data:
         dataset_config: ${dataloader.dataset_config}
-        start: 2022-01-03
-        end: 2022-01-03
+        start: 2017-01-03
+        end: 2017-01-03
   test:
     datasets:
       data:
         dataset_config: ${dataloader.dataset_config}
-        start: 2022-01-04
+        start: 2017-01-04
         end: null
 
 # =============================================================================
@@ -116,7 +116,7 @@ system:
   input:
     root: dummy_path
     dataset: ${system.input.root}/meps-2p5km-201701-201701-6h-v1-testing.zarr
-    forcing_dataset: ${system.input.root}/aifs-ea-an-oper-0001-mars-o96-2022-2022-6h-v8-testing.zarr
+    forcing_dataset: ${system.input.root}/aifs-ea-an-oper-0001-mars-o96-2017-2017-6h-v8-testing.zarr
     graph: ${system.output.root}graphs/stretched.pt
     truncation: null
     truncation_inv: null
