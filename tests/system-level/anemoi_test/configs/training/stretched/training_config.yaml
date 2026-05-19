@@ -211,6 +211,21 @@ training:
       data:
         - t_50
         - t_100
+
+  variable_groups:
+    datasets:
+      data:
+        default: sfc
+        pl:
+          param:
+          - q
+          - t
+          - u
+          - v
+          - w
+          # z excluded: only surface z (orography) exists in the cutout,
+          # no pressure-level z — pl scaler must not try to scale it
+
 task:
   _target_: anemoi.training.tasks.Forecaster
   multistep_input: 2
