@@ -1,5 +1,7 @@
 #!/bin/bash
 
+module load python3
+module load ecflow
 module load wellies/${WELLIES_VERSION:-1.2.0}
 module list
 

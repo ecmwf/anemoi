@@ -105,6 +105,8 @@ jobs:
             echo "Job is running on ${{ runner.os }}"
 
             # Load modules of interest
+            module load python3
+            module load ecflow
             module load wellies/1.2.0
 
             mkdir -p /scratch/${{ secrets.troika_user }}/anemoi_tests/${{ inputs.suite_name }}
