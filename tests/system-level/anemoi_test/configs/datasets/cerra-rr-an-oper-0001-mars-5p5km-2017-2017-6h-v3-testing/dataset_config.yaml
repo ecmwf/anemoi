@@ -44,18 +44,24 @@ input:
       - msl
       stream: oper
       type: an
-  - accumulate:
-      period: 6h
-      availability: auto
-      source:
-        mars:
-          class: rr
-          levtype: sfc
-          origin: se-al-ec
-          param:
-          - tp
-          - sf
-          stream: oper
+  - pipe:
+    - accumulate:
+        period: 6h
+        availability: auto
+        source:
+          mars:
+            class: rr
+            levtype: sfc
+            origin: se-al-ec
+            param:
+            - tp
+            - sf
+            stream: oper
+    - rescale:
+        param: tp
+        scale: 0.001
+        offset: 0.0
+
   - constants:
       param:
       - cos_latitude
