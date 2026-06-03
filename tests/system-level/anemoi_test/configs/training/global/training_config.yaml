@@ -3,9 +3,9 @@
 # =========================================
 # source_repo: anemoi-core
 # branch: main
-# commit: 8713d1243df0a4d51249227b1100d42c631e5415
-# uncommitted_changes: False
-# generated_at: 2026-04-28T08:12:10.154870+00:00
+# commit: 22e16d51a3a943ef74ae3f4f25fe9163e270884a
+# uncommitted_changes: True
+# generated_at: 2026-06-03T09:31:56.311241+00:00
 # =========================================
 data:
   format: zarr
@@ -201,6 +201,8 @@ diagnostics:
       system: false
       terminal: true
       run_name: null
+      prefix: ''
+      log_hyperparams: true
       on_resume_create_child: true
       expand_hyperparams:
       - config
@@ -245,9 +247,9 @@ system:
   input:
     dataset: ${system.input.root}/aifs-ea-an-oper-0001-mars-o96-2017-2017-6h-v8-testing.zarr
     graph: null
+    loss_matrices_path: null
     truncation: null
     truncation_inv: null
-    loss_matrices_path: null
     warm_start: null
     root: dummy_root
   hardware:
@@ -335,6 +337,7 @@ model:
     num_layers: 2
     num_chunks: 2
     mlp_hidden_ratio: 4
+    mlp_implementation: mlp
     num_heads: 16
     qk_norm: false
     cpu_offload: ${model.cpu_offload}
@@ -348,6 +351,7 @@ model:
     sub_graph_edge_attributes: ${model.attributes.edges}
     num_chunks: 4
     mlp_hidden_ratio: 4
+    mlp_implementation: mlp
     num_heads: 16
     qk_norm: false
     cpu_offload: ${model.cpu_offload}
@@ -362,6 +366,7 @@ model:
     sub_graph_edge_attributes: ${model.attributes.edges}
     num_chunks: 4
     mlp_hidden_ratio: 4
+    mlp_implementation: mlp
     num_heads: 16
     initialise_data_extractor_zero: false
     qk_norm: false
@@ -446,6 +451,16 @@ training:
           weights:
           - 1.0
           - 2.0
+  training_loss:
+    datasets:
+      data:
+        _target_: anemoi.training.losses.MSELoss
+        scalers:
+        - pressure_level
+        - general_variable
+        - node_weights
+        - output_steps
+        ignore_nans: false
   optimization:
     optimizer:
       _target_: torch.optim.AdamW
@@ -475,22 +490,13 @@ training:
   gradient_clip:
     val: 32.0
     algorithm: value
-  training_method: anemoi.training.train.methods.SingleTraining
+  method:
+    _target_: anemoi.training.train.methods.SingleTraining
   strategy:
     _target_: anemoi.training.distributed.strategy.DDPGroupStrategy
     num_gpus_per_model: ${system.hardware.num_gpus_per_model}
     read_group_size: ${dataloader.read_group_size}
   loss_gradient_scaling: false
-  training_loss:
-    datasets:
-      data:
-        _target_: anemoi.training.losses.MSELoss
-        scalers:
-        - pressure_level
-        - general_variable
-        - node_weights
-        - output_steps
-        ignore_nans: false
   validation_metrics:
     datasets:
       data:
