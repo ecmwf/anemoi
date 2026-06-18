@@ -4,7 +4,7 @@
 #
 # After creation, patch variables_metadata to align with the ECMWF dataset.
 anemoi_command: >-
-  bash -c 'export MEPS_201701="/perm/nor1427/meps_testdataset_201701/*.nc" &&
+  bash -c 'export MEPS_201701="/ec/project/anemoi/test-data/meps-dataset-201701/*.nc" &&
   TMP=$(mktemp --suffix=.yaml) &&
   envsubst "\$MEPS_201701" < "$1" > "$TMP" &&
   anemoi-datasets create "$TMP" "$2" "$3";
