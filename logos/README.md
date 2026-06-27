@@ -16,6 +16,31 @@ This directory contains the Anemoi logo in three variants:
   <img src="logo-text-right.svg" alt="Logo with text on the right" height="160">
 </p>
 
+## Documentation logos (Read the Docs)
+
+To produce a logo with a custom sub-title under the "anemoi" wordmark — for
+example one per documentation site on Read the Docs — use `make_logo.py`. It
+reads [`docs-logo-template.svg`](docs-logo-template.svg), substitutes your
+string, and centres it automatically (glyph widths are embedded in the script,
+so it has no dependencies and needs no network or font files).
+
+Create the SVG:
+
+```bash
+python3 make_logo.py metadata        # writes metadata.svg
+```
+
+Then rasterise it to a 640-pixel-wide PNG (see
+[Creating PNGs from the SVGs](#creating-pngs-from-the-svgs) for installing a
+converter):
+
+```bash
+rsvg-convert -w 640 metadata.svg -o metadata.png
+```
+
+Pass `-o` to choose a different SVG filename, e.g.
+`python3 make_logo.py "inference" -o logo-inference.svg`.
+
 ## About SVG
 
 The logos are provided as **SVG** (Scalable Vector Graphics). SVG is a vector
