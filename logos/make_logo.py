@@ -154,6 +154,7 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("text", help="sub-title string to render")
     p.add_argument("-o", "--output", help="output SVG (default: <text>.svg)")
+    p.add_argument("--white", action="store_true", help="render sub-title text in white (for dark mode)")
     p.add_argument("--template", default=TEMPLATE)
     args = p.parse_args(argv)
 
@@ -173,6 +174,8 @@ def main(argv=None):
 
     new_tag = re.sub(r'x="[^"]*"', f'x="{new_x:.4f}"', tmpl, count=1)
     new_tag = re.sub(r">([^<]*)</text>", f">{args.text}</text>", new_tag, count=1)
+    if args.white:
+        new_tag = re.sub(r'fill="[^"]*"', 'fill="#ffffff"', new_tag, count=1)
 
     out_svg = svg.replace(tmpl, new_tag, 1)
     out_path = args.output or f"{args.text}.svg"
