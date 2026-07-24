@@ -3,9 +3,9 @@
 # =========================================
 # source_repo: anemoi-core
 # branch: main
-# commit: 22e16d51a3a943ef74ae3f4f25fe9163e270884a
-# uncommitted_changes: True
-# generated_at: 2026-06-03T09:31:56.311241+00:00
+# commit: abcaf9b5b4ae9b3b6bfc4e5b7fca9e0354dbfd88
+# uncommitted_changes: False
+# generated_at: 2026-07-24T08:55:37.199646+00:00
 # =========================================
 data:
   format: zarr
@@ -76,37 +76,30 @@ dataloader:
     validation: 3
     test: 20
   dataset: ${system.input.dataset}
-  model_run_info: null
   training:
     datasets:
       data:
         dataset_config:
           dataset: ${dataloader.dataset}
           frequency: ${data.frequency}
-          drop: []
         start: null
         end: '2017-01-08 12:00:00'
-        trajectory: ${dataloader.model_run_info}
   validation:
     datasets:
       data:
         dataset_config:
           dataset: ${dataloader.dataset}
           frequency: ${data.frequency}
-          drop: []
         start: '2017-01-08 18:00:00'
         end: 2021
-        trajectory: ${dataloader.model_run_info}
   test:
     datasets:
       data:
         dataset_config:
           dataset: ${dataloader.dataset}
           frequency: ${data.frequency}
-          drop: []
         start: 2022
         end: null
-        trajectory: ${dataloader.model_run_info}
 diagnostics:
   plot:
     asynchronous: false
@@ -343,6 +336,7 @@ model:
     cpu_offload: ${model.cpu_offload}
     gradient_checkpointing: true
     layer_kernels: ${model.layer_kernels}
+    shard_strategy: edges
     graph_attention_backend: triton
     edge_pre_mlp: false
   encoder:
@@ -483,6 +477,9 @@ training:
   update_ds_stats_on_ckpt_load:
     states: false
     tendencies: true
+  check_variables_compatibility:
+    ignore_units: false
+    ignore_processing_period: false
   deterministic: false
   precision: 16-mixed
   accum_grad_batches: 1
@@ -496,6 +493,7 @@ training:
     _target_: anemoi.training.distributed.strategy.DDPGroupStrategy
     num_gpus_per_model: ${system.hardware.num_gpus_per_model}
     read_group_size: ${dataloader.read_group_size}
+    use_local_synchronization: true
   loss_gradient_scaling: false
   validation_metrics:
     datasets:
@@ -528,5 +526,4 @@ training:
   max_epochs: 2
   max_steps: 150000
   submodules_to_freeze: []
-  recompile_limit: 32
 config_validation: true
