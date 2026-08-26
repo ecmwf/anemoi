@@ -49,6 +49,12 @@ ensure that a PR is correctly labeled. If you're unsure which label to
 use, default to ``ATS Approval Needed`` or tag ``@anemoisecurity`` for
 clarification.
 
+In ``anemoi-core``, a PR additionally needs one of the labels
+``run-expensive-tests`` or ``expensive-tests-not-needed`` to declare
+whether the expensive integration tests have to run. See
+:ref:`expensive-tests-labels` for what the two labels do and when to set
+them.
+
 .. note::
 
    Code must not be merged into any Anemoi packages without the
@@ -388,3 +394,8 @@ Choose efficient algorithms and data structures:
 All unit tests are run automatically on our CI/CD pipeline for every
 pull request after the initial review by maintainers. Ensure all tests
 pass before submitting your PR.
+
+The expensive integration tests are not run by default, because they
+occupy GPUs on the shared HPC allocation. They are opted into per pull
+request via a label, which is also what gates merging. See
+:ref:`expensive-tests-labels` for details.
