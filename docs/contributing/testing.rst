@@ -41,6 +41,8 @@ System-level Tests
 -  The system-level test suite is located in the `anemoi` repository in
    the `tests/system-level` directory.
 
+.. _running-tests:
+
 ***************
  Running Tests
 ***************
@@ -112,6 +114,74 @@ GitHub Actions tab.
 
    If you need to replace a running suite, please wait for it to finish
    or cancel it first.
+
+.. _expensive-tests-labels:
+
+************************
+ Continuous Integration
+************************
+
+The unit tests run automatically on every push to a pull request. The
+expensive integration tests do not: they occupy GPUs on the shared HPC
+allocation, so running them on every work-in-progress commit would be
+wasteful. In ``anemoi-core`` they are instead opted into per pull
+request, using a label.
+
+The Labels
+==========
+
+A pull request must carry one of the following two labels before it can
+be merged:
+
+``run-expensive-tests``
+   The expensive integration tests run on HPC for every push to the pull
+   request (workflow ``nightly-integration-tests-hpc-gpu``, see
+   :ref:`running-tests` for how to trigger it manually).
+
+``expensive-tests-not-needed``
+   Opt out. Use this only for changes that cannot affect training or
+   inference behaviour, such as documentation, or changes confined to
+   unrelated packages.
+
+The point of the labels is that the decision is recorded explicitly:
+every pull request states whether the expensive tests were needed, and
+nothing is merged simply because nobody thought about it.
+
+If neither label is set, the check ``expensive-tests-label`` stays
+*pending* rather than failing. A pending required check greys out the
+merge button without adding a red cross, so a missing decision never
+looks like a failing test.
+
+Suggested Workflow
+==================
+
+#. While drafting, leave both labels off and iterate on the fast unit
+   tests only.
+
+#. Once the pull request is close to its final state, add
+   ``run-expensive-tests`` so that the expensive tests run against the
+   code that will actually be merged.
+
+#. To go back to fast iteration, remove ``run-expensive-tests`` again.
+   Removing the label re-evaluates the checks, so an earlier verdict
+   does not linger on the pull request.
+
+#. Before merging, make sure that the label that is set still reflects
+   the current state of the pull request, and that the expensive tests
+   are green if they were requested.
+
+.. note::
+
+   Pull requests from forks additionally require a maintainer to add the
+   ``approved-for-ci`` label, since the tests run code from the pull
+   request on ECMWF HPC. This approval is revoked whenever new commits
+   are pushed and has to be granted again.
+   This is true for unit and integration tests alike.
+
+.. note::
+
+   Pull requests opened by automation (for example ``DeployDuck`` or
+   ``pre-commit-ci``) are exempt from the label gate.
 
 ***************
  Writing Tests
