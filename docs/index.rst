@@ -55,6 +55,10 @@ Anemoi also aims to serve the wider research community by enabling users to test
 🏆 *Anemoi* is the winner of the `EMS Technology Achievement Award
 2025 <https://www.emetsoc.org/ems-technology-achievement-award-2025-for-anemoi/>`_.
 
+🏆 *Anemoi* has also won the `2025 HPCwire Readers' and Editors' Choice
+Award <https://www.hpcwire.com/2025-hpcwire-awards-readers-editors-choice/>`_
+for "Best Use of AI Methods for Augmenting HPC Applications."
+
 ##########
  License
 ##########
