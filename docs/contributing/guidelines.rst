@@ -141,9 +141,9 @@ Scientific Validation
 
 When a PR is labelled ``Scientific Validation Required``, the contributor
 must demonstrate that the proposed feature provides tangible value. This
-label applies only to **new features** (not bug fixes) that do not require
-approval by ATS. The goal is to provide evidence that the feature is useful
-and will actually be adopted in operational or research models.
+label applies only to **new features** (not bug fixes). The goal is to
+provide evidence that the feature is useful and will actually be adopted
+in operational or research models.
 
 The form of evidence is intentionally flexible, but it should clearly
 show the benefit of the feature. Examples of acceptable evidence include:
