@@ -1,0 +1,13 @@
+# An ugly workaround for lack of variable substitution in anemoi-datasets
+# create. Create a copy of dataset_config.yaml, with a replaced variable
+# ($MEPS_201701) for path to nc files and run using that file.
+#
+# After creation, patch variables_metadata to align with the ECMWF dataset.
+anemoi_command: >-
+  bash -c 'export MEPS_201701="/ec/project/anemoi/test-data/meps-dataset-201701/*.nc" &&
+  TMP=$(mktemp --suffix=.yaml) &&
+  envsubst "\$MEPS_201701" < "$1" > "$TMP" &&
+  anemoi-datasets create "$TMP" "$2" "$3";
+  RET=$?; rm -f "$TMP";
+  [ $RET -eq 0 ] && python -c "import sys,zarr; store=zarr.open(sys.argv[1],mode=\"r+\"); meta=dict(store.attrs.get(\"variables_metadata\",{})); SFC=\"sfc\"; PL=\"pl\"; [meta.update({p:{\"mars\":{\"levtype\":SFC,\"param\":p}}}) for p in [\"2t\",\"2d\",\"skt\",\"10u\",\"10v\",\"z\",\"lsm\",\"lcc\",\"mcc\",\"hcc\",\"tcc\",\"10fg\",\"tcw\",\"sp\",\"msl\",\"vis\",\"fog\",\"10si\",\"cbh\"]]; meta[\"tp\"]={\"mars\":{\"levtype\":SFC,\"param\":\"tp\"},\"process\":\"accumulation\",\"period\":[\"0d\",\"6h\"]}; meta[\"ssrd\"]={\"mars\":{\"levtype\":SFC,\"param\":\"ssrd\"},\"process\":\"accumulation\",\"period\":[\"0d\",\"6h\"]}; meta[\"strd\"]={\"mars\":{\"levtype\":SFC,\"param\":\"strd\"},\"process\":\"accumulation\",\"period\":[\"0d\",\"6h\"]}; [meta.update({\"%s_%s\"%(p,l):{\"mars\":{\"levtype\":PL,\"levelist\":l,\"param\":p}}}) for l in [50,100,150,200,250,300,400,500,700,850,925,1000] for p in [\"t\",\"q\",\"u\",\"v\",\"w\",\"z\"]]; store.attrs[\"variables_metadata\"]=meta; print(\"Patched\",sys.argv[1])" "$2";
+  exit $RET' --

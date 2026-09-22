@@ -4,8 +4,8 @@ if [[ ! -d "$OUTPUT_PATH" ]]; then
 fi
 cd "$OUTPUT_PATH"
 
-if [[ ! -f output.grib ]]; then
-  echo "❌ Output file not found: output.grib"
+if [[ ! -f output.grib  && ! -f output.nc ]]; then
+  echo "❌ Output file not found: output.grib/output.nc"
   exit 1
 fi
-echo "✅ Inference output file found: output.grib"
+echo "✅ Inference output file found: output.grib/output.nc"

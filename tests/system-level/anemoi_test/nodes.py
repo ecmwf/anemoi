@@ -1,3 +1,12 @@
+# (C) Copyright 2026 Anemoi contributors.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+
 import os
 from pathlib import Path
 from typing import Optional
@@ -215,6 +224,7 @@ class InferenceConfigTask(pf.Task):
         script.environment_variable("CHECKPOINT_FILE", checkpoint_file)
         script.environment_variable("CONFIG_TEMPLATE", str(config_template_path))
         script.environment_variable("OUTPUT_PATH", str(output_path))
+        script.environment_variable("RESULTS_DIR_DATASETS", RESULTS_DIR_DATASETS)
         super().__init__(name="generate_config_" + folder, script=script)
 
 
