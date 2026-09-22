@@ -49,6 +49,17 @@ Anemoi’s primary developers are based in operational meteorological centres, w
 Anemoi also aims to serve the wider research community by enabling users to test new methods for training data-driven forecasting systems. This user group places greater emphasis on flexibility, allowing ideas to be easily adapted and tested.
 
 ##########
+ Awards
+##########
+
+🏆 *Anemoi* is the winner of the `EMS Technology Achievement Award
+2025 <https://www.emetsoc.org/ems-technology-achievement-award-2025-for-anemoi/>`_.
+
+🏆 *Anemoi* won the `2025 HPCwire Readers' Choice
+Award <https://www.hpcwire.com/2025-hpcwire-awards-readers-editors-choice/>`_
+for "Best Use of AI Methods for Augmenting HPC Applications."
+
+##########
  License
 ##########
 
