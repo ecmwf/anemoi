@@ -148,7 +148,9 @@ show the benefit of the feature. Examples of acceptable evidence include:
 
 -  **Computational cost reduction** – Demonstrate that the feature
    reduces training/inference time, faster convergence, memory usage, or
-   other resources.  Include profiling and benchmarking results comparing the implementation against a baseline run without the feature, using consistent hardware and settings.
+   other resources.  Include profiling and benchmarking results comparing the
+   implementation against a baseline run without the feature, using consistent
+   hardware and settings.
 
 -  **Qualitative evaluation** – For features affecting specific
    phenomena (e.g., forecast realism, small scale features, extreme events),
