@@ -22,7 +22,7 @@ ecflow_server:
 # the variables. Be careful with the order of the variables and the order of the configuration files,
 # as the variables will be overriden if they have the same name.
 
-OUTPUT_ROOT_SUITE: "/lus/h1resw02/project/anemoi/ecflow_server"
+OUTPUT_ROOT_SUITE: "/ec/project/anemoi/ecflow_server"
 # For the ci workflow, the output root is in the anemoi project space, writable by the system-level test user.
 
 ecflow_variables:
