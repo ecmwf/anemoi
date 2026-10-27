@@ -402,3 +402,5 @@ If your test case needs static data that cannot be retrieved at runtime
 test suite. To access this filesystem, you need an account on the ECMWF
 HPC and to be added to the `anemoi` group. Both can be requested from
 `ECMWF user support <https://confluence.ecmwf.int/site/support>`_.
+If you don't have access to the ECMWF HPC, please contact a project
+maintainer.
