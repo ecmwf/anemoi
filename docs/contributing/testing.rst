@@ -392,3 +392,15 @@ the folder will be the name of the test case. In the folder add
    specify the `anemoi_command` to be used to run the training --
    typically, "anemoi-training train". Hardware overrides (e.g. path to
    the `training_config.yaml` file) will be set in the suite.
+
+Static Data for Test Cases
+==========================
+
+If your test case needs static data that cannot be retrieved at runtime
+(e.g. input files for dataset creation), you can store it on the
+`/ec/project/anemoi` filesystem, which is accessible from the system-level
+test suite. To access this filesystem, you need an account on the ECMWF
+HPC and to be added to the `anemoi` group. Both can be requested from
+`ECMWF user support <https://confluence.ecmwf.int/site/support>`_.
+If you don't have access to the ECMWF HPC, please contact a project
+maintainer.
