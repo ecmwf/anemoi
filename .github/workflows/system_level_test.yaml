@@ -22,6 +22,10 @@ on:
       ecflow_port:
         required: true
 
+env:
+  # Directory on the HPC where the suite summary report is written
+  REPORT_DIR: /scratch/${{ secrets.troika_user }}/anemoi/system-test-reports/${{ inputs.suite_name }}
+
 jobs:
   deploy:
     runs-on: hpc
@@ -109,8 +113,8 @@ jobs:
             module load ecflow
             module load wellies/1.3.1
 
-            mkdir -p /scratch/${{ secrets.troika_user }}/anemoi_tests/${{ inputs.suite_name }}
-            tracksuite-print /anemoi_tests/${{ inputs.suite_name }} --host ${{ secrets.ecflow_host }} --port ${{ secrets.ecflow_port }} -f html &> /scratch/${{ secrets.troika_user }}/anemoi_tests/${{ inputs.suite_name }}/summary.md
+            mkdir -p ${{ env.REPORT_DIR }}
+            tracksuite-print /anemoi_tests/${{ inputs.suite_name }} --host ${{ secrets.ecflow_host }} --port ${{ secrets.ecflow_port }} -f raw &> ${{ env.REPORT_DIR }}/summary.md
           sbatch_options: |
             #SBATCH --job-name=anemoi_test_print_results
             #SBATCH --time=00:10:00
@@ -125,7 +129,7 @@ jobs:
     steps:
       - name: Print summary
         run: |
-          scp ${{ secrets.troika_user }}@hpc-batch:/scratch/${{ secrets.troika_user }}/anemoi_tests/${{ inputs.suite_name }}/summary.md $GITHUB_STEP_SUMMARY
+          scp ${{ secrets.troika_user }}@hpc-batch:${{ env.REPORT_DIR }}/summary.md $GITHUB_STEP_SUMMARY
   clean:
     runs-on: hpc
     name: Clean
