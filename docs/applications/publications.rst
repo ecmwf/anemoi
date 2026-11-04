@@ -7,9 +7,8 @@
 Below are papers in meteorology and related fields whose authors used
 *Anemoi*, either its packages or models built and trained with it. The
 list includes both peer-reviewed papers and preprints that have not yet
-been peer reviewed. If you know of a paper that should be
-added, please suggest it with a pull request to
-https://github.com/ecmwf/anemoi-docs.
+been peer reviewed. If you know of a paper that should be added, please
+suggest it with a pull request to https://github.com/ecmwf/anemoi.
 
 ***************
  Peer-reviewed
