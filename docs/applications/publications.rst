@@ -39,11 +39,6 @@ suggest it with a pull request to https://github.com/ecmwf/anemoi.
    Intelligence for the Earth Systems* 5(2) (preprint:
    arXiv:2509.00017).
 
--  Yu, Y., Huang, L., Calotoiu, A., Hoefler, T. (2026). `Scaling Laws of
-   Global Weather Models <https://arxiv.org/abs/2602.22962>`__.
-   *International Conference on Machine Learning (ICML 2026)*, accepted
-   (preprint: arXiv:2602.22962).
-
 -  Lang, S., Alexe, M., Clare, M. C. A., et al. (2026). `AIFS-CRPS:
    ensemble forecasting using a model trained with a loss function based
    on the continuous ranked probability score
