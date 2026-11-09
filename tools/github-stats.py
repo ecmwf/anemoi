@@ -96,7 +96,6 @@ def opened_pull_requests():
         events = defaultdict(int)
 
         for pull in iterate_pages(args.owner, repo, "pulls"):
-
             d = datetime.datetime.fromisoformat(pull["created_at"].replace("Z", "")).date()
             events[d] += 1
 
@@ -148,7 +147,6 @@ def pull_requests_activity():
         ]
     )
     for repo in args.repos:
-
         for pull in iterate_pages(args.owner, repo, "pulls"):
             writer.writerow(
                 [

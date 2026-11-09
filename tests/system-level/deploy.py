@@ -34,7 +34,6 @@ logger = logging.getLogger("anemoi_test")
 
 
 if __name__ == "__main__":
-
     # Create parser and parse arguments
     parser = wl.get_parser()
     args = parser.parse_args()
