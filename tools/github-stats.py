@@ -48,8 +48,16 @@ group.add_argument("--pull-requests-activity", action="store_true")
 # group.add_argument('--other-stat', action='store_true')
 
 parser.add_argument("--owner", default="ecmwf", help="GitHub owner")
-parser.add_argument("--repos", type=parse_comma_separated, default=REPOS, help="GitHub repositories")
-parser.add_argument("--output", "-o", type=argparse.FileType("w"), default=sys.stdout, help="Output file")
+parser.add_argument(
+    "--repos", type=parse_comma_separated, default=REPOS, help="GitHub repositories"
+)
+parser.add_argument(
+    "--output",
+    "-o",
+    type=argparse.FileType("w"),
+    default=sys.stdout,
+    help="Output file",
+)
 
 args = parser.parse_args()
 
@@ -96,12 +104,15 @@ def opened_pull_requests():
         events = defaultdict(int)
 
         for pull in iterate_pages(args.owner, repo, "pulls"):
-
-            d = datetime.datetime.fromisoformat(pull["created_at"].replace("Z", "")).date()
+            d = datetime.datetime.fromisoformat(
+                pull["created_at"].replace("Z", "")
+            ).date()
             events[d] += 1
 
             if pull["closed_at"]:
-                d = datetime.datetime.fromisoformat(pull["closed_at"].replace("Z", "")).date()
+                d = datetime.datetime.fromisoformat(
+                    pull["closed_at"].replace("Z", "")
+                ).date()
                 events[d] -= 1
 
         min_date = min(events.keys())
@@ -148,7 +159,6 @@ def pull_requests_activity():
         ]
     )
     for repo in args.repos:
-
         for pull in iterate_pages(args.owner, repo, "pulls"):
             writer.writerow(
                 [

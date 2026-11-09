@@ -34,13 +34,14 @@ logger = logging.getLogger("anemoi_test")
 
 
 if __name__ == "__main__":
-
     # Create parser and parse arguments
     parser = wl.get_parser()
     args = parser.parse_args()
 
     # Set log level from args
-    logging.basicConfig(level=args.log_level, format="[%(levelname)s]%(name)s: %(message)s")
+    logging.basicConfig(
+        level=args.log_level, format="[%(levelname)s]%(name)s: %(message)s"
+    )
     logger.debug(f"deploying with versions: \n{show_versions(as_dict=True)}")
 
     # Create config object and suite
@@ -61,7 +62,9 @@ if __name__ == "__main__":
         )
 
     # Deploy suite scripts and definition file
-    logger.info(f"Deploying suite to {ecflow_server.hostname}:{ecflow_server.deploy_dir}")
+    logger.info(
+        f"Deploying suite to {ecflow_server.hostname}:{ecflow_server.deploy_dir}"
+    )
     wl.deploy_suite(
         suite,
         name=config.name,

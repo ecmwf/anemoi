@@ -9,7 +9,6 @@
 
 import os
 from pathlib import Path
-from typing import Optional
 
 import pyflow as pf
 import wellies as wl
@@ -44,7 +43,9 @@ class CreateDatasetFamily(pf.AnchorFamily):
                 if not local_config_folder.is_dir():
                     continue
                 if not (local_config_folder / "dataset_config.yaml").exists():
-                    raise FileNotFoundError(f"Dataset test requires a config file: {folder}/dataset_config.yaml")
+                    raise FileNotFoundError(
+                        f"Dataset test requires a config file: {folder}/dataset_config.yaml"
+                    )
                 try:
                     task_config = load_yaml(local_config_folder / "task_config.yaml")
                 except FileNotFoundError as e:
@@ -52,18 +53,24 @@ class CreateDatasetFamily(pf.AnchorFamily):
                         f"Dataset test requires a task config file: {folder}/task_config.yaml"
                     ) from e
 
-                dataset_cmd = task_config.get("anemoi_command", "anemoi-datasets create")
+                dataset_cmd = task_config.get(
+                    "anemoi_command", "anemoi-datasets create"
+                )
                 create_dataset = DatasetTask(folder, config, dataset_cmd=dataset_cmd)
                 check_dataset = DatasetCheck(folder, create_dataset.output_path)
                 create_dataset >> check_dataset
 
 
 class DatasetTask(pf.Task):
-    def __init__(self, name: str, suite_config: dict, dataset_cmd: str = "anemoi-datasets create"):
+    def __init__(
+        self, name: str, suite_config: dict, dataset_cmd: str = "anemoi-datasets create"
+    ):
         config_file_path = STATIC_DATA_DIR / "datasets" / name / "dataset_config.yaml"
         self.output_path = RESULTS_DIR_DATASETS / (name + ".zarr")
 
-        create_command = dataset_cmd + f" {config_file_path} {self.output_path} --overwrite"
+        create_command = (
+            dataset_cmd + f" {config_file_path} {self.output_path} --overwrite"
+        )
 
         super().__init__(
             name=name.replace("-", "_"),
@@ -73,8 +80,13 @@ class DatasetTask(pf.Task):
 
 class DatasetCheck(pf.Task):
     def __init__(self, name: str, dataset_path: Path):
-        check_if_dataset_exists = [f"test -d {dataset_path}", f"test -f {dataset_path}/.zattrs"]
-        super().__init__(name="check_" + name.replace("-", "_"), script=check_if_dataset_exists)
+        check_if_dataset_exists = [
+            f"test -d {dataset_path}",
+            f"test -f {dataset_path}/.zattrs",
+        ]
+        super().__init__(
+            name="check_" + name.replace("-", "_"), script=check_if_dataset_exists
+        )
 
 
 class CreateTrainingFamily(pf.AnchorFamily):
@@ -88,7 +100,9 @@ class CreateTrainingFamily(pf.AnchorFamily):
                 if not config_folder.is_dir():
                     continue
                 if not (config_folder / "training_config.yaml").exists():
-                    raise FileNotFoundError(f"Training test requires a config file: {folder}/training_config.yaml")
+                    raise FileNotFoundError(
+                        f"Training test requires a config file: {folder}/training_config.yaml"
+                    )
                 try:
                     task_config = load_yaml(config_folder / "task_config.yaml")
                 except FileNotFoundError as e:
@@ -96,9 +110,13 @@ class CreateTrainingFamily(pf.AnchorFamily):
                         f"Training test requires a task config file: {folder}/task_config.yaml"
                     ) from e
 
-                training_cmd = task_config.get("anemoi_command", "anemoi-training train")
+                training_cmd = task_config.get(
+                    "anemoi_command", "anemoi-training train"
+                )
                 training = TrainingTask(folder, config, training_cmd=training_cmd)
-                check_training = TrainingCheck("check_" + folder, RESULTS_DIR_TRAINING / folder / "checkpoint")
+                check_training = TrainingCheck(
+                    "check_" + folder, RESULTS_DIR_TRAINING / folder / "checkpoint"
+                )
                 training >> check_training
 
                 # Attach required datasets to the training task to set triggers in main family
@@ -106,8 +124,13 @@ class CreateTrainingFamily(pf.AnchorFamily):
 
 
 class TrainingTask(pf.Task):
-    def __init__(self, folder: str, suite_config: dict, training_cmd: str = "anemoi-training train"):
-        self.required_datasets: Optional[str] = None
+    def __init__(
+        self,
+        folder: str,
+        suite_config: dict,
+        training_cmd: str = "anemoi-training train",
+    ):
+        self.required_datasets: str | None = None
 
         overrides = {
             "--config-path": STATIC_DATA_DIR / "training" / folder,
@@ -117,10 +140,16 @@ class TrainingTask(pf.Task):
             "training.max_epochs": 2,
         }
 
-        training_command = training_cmd + " --config-name=training_config " + dict_to_overrides_string(overrides)
+        training_command = (
+            training_cmd
+            + " --config-name=training_config "
+            + dict_to_overrides_string(overrides)
+        )
 
         super().__init__(
-            name=folder, script=[suite_config.tools.load("training_env"), training_command], submit_arguments="gpu_job"
+            name=folder,
+            script=[suite_config.tools.load("training_env"), training_command],
+            submit_arguments="gpu_job",
         )
 
 
@@ -149,7 +178,9 @@ class CreateInferenceFamily(pf.AnchorFamily):
                     ) from e
 
                 # Define some variables
-                inference_config_path = RESULTS_DIR_INFERENCE / folder / "configs" / "config.yaml"
+                inference_config_path = (
+                    RESULTS_DIR_INFERENCE / folder / "configs" / "config.yaml"
+                )
                 output_path = RESULTS_DIR_INFERENCE / folder / "grib"
 
                 # Define a task to generate configuration files for inference
@@ -157,13 +188,20 @@ class CreateInferenceFamily(pf.AnchorFamily):
                     folder=folder,
                     suite_config=config,
                     checkpoint_path=Path(RESULTS_DIR_TRAINING / folder / "checkpoint"),
-                    checkpoint_file=task_config.get("checkpoint_file", "inference-last.ckpt"),
-                    config_template_path=STATIC_DATA_DIR / "inference" / folder / "config_template.yaml",
+                    checkpoint_file=task_config.get(
+                        "checkpoint_file", "inference-last.ckpt"
+                    ),
+                    config_template_path=STATIC_DATA_DIR
+                    / "inference"
+                    / folder
+                    / "config_template.yaml",
                     output_path=inference_config_path,
                 )
 
                 # Define a task to retrieve data for inference
-                retrieve_cmd = task_config.get("retrieve_command", "anemoi-inference retrieve")
+                retrieve_cmd = task_config.get(
+                    "retrieve_command", "anemoi-inference retrieve"
+                )
                 overrides = [
                     "--target",
                     "input.grib",
@@ -186,7 +224,9 @@ class CreateInferenceFamily(pf.AnchorFamily):
                 )
 
                 # Define a task to run inference
-                inference_cmd = task_config.get("inference_command", "anemoi-inference run")
+                inference_cmd = task_config.get(
+                    "inference_command", "anemoi-inference run"
+                )
                 inference = InferenceTask(
                     folder=folder,
                     suite_config=config,
@@ -218,8 +258,10 @@ class InferenceConfigTask(pf.Task):
         config_template_path: Path,
         output_path: Path,
     ):
-        self.required_trainings: Optional[str] = None
-        script = pf.FileScript(SUITE_DIR / "configs/inference" / folder / "generate_config.sh")
+        self.required_trainings: str | None = None
+        script = pf.FileScript(
+            SUITE_DIR / "configs/inference" / folder / "generate_config.sh"
+        )
         script.environment_variable("CHECKPOINT_DIR", str(checkpoint_path))
         script.environment_variable("CHECKPOINT_FILE", checkpoint_file)
         script.environment_variable("CONFIG_TEMPLATE", str(config_template_path))
@@ -230,20 +272,38 @@ class InferenceConfigTask(pf.Task):
 
 class InferenceRetrieveTask(pf.Task):
     def __init__(
-        self, folder: str, suite_config: dict, config_path: Path, mars_cmd: str, retrieve_cmd: str, output_path: Path
+        self,
+        folder: str,
+        suite_config: dict,
+        config_path: Path,
+        mars_cmd: str,
+        retrieve_cmd: str,
+        output_path: Path,
     ):
-        self.required_trainings: Optional[str] = None
-        script = pf.FileScript(SUITE_DIR / "configs/inference/" / folder / "retrieve.sh")
+        self.required_trainings: str | None = None
+        script = pf.FileScript(
+            SUITE_DIR / "configs/inference/" / folder / "retrieve.sh"
+        )
         script.environment_variable("CONFIG_PATH", str(config_path))
         script.environment_variable("MARS_CMD", mars_cmd)
         script.environment_variable("RETRIEVE_CMD", retrieve_cmd)
         script.environment_variable("OUTPUT_PATH", str(output_path))
-        super().__init__(name="retrieve_" + folder, script=[suite_config.tools.load("inference_env"), script])
+        super().__init__(
+            name="retrieve_" + folder,
+            script=[suite_config.tools.load("inference_env"), script],
+        )
 
 
 class InferenceTask(pf.Task):
-    def __init__(self, folder: str, suite_config: dict, config_path: Path, inference_cmd: str, output_path: Path):
-        self.required_trainings: Optional[str] = None
+    def __init__(
+        self,
+        folder: str,
+        suite_config: dict,
+        config_path: Path,
+        inference_cmd: str,
+        output_path: Path,
+    ):
+        self.required_trainings: str | None = None
         script = pf.FileScript(SUITE_DIR / "configs/inference/inference.sh")
         script.environment_variable("CONFIG_PATH", str(config_path))
         script.environment_variable("INFERENCE_CMD", inference_cmd)
@@ -288,21 +348,29 @@ class MainFamily(pf.AnchorFamily):
             training_fam = CreateTrainingFamily(config)
             inference_fam = CreateInferenceFamily(config)
 
-            for training_task in [task for task in training_fam.all_tasks if isinstance(task, TrainingTask)]:
+            for training_task in [
+                task
+                for task in training_fam.all_tasks
+                if isinstance(task, TrainingTask)
+            ]:
                 if not training_task.required_datasets:
                     raise ValueError(
                         f"Training task '{training_task.name}' requires datasets, but none are specified in task_config.yaml."
                     )
                 for dataset in training_task.required_datasets:
                     dataset_task = dataset.replace("-", "_")
-                    if dataset_task not in [task.name for task in dataset_fam.all_tasks]:
+                    if dataset_task not in [
+                        task.name for task in dataset_fam.all_tasks
+                    ]:
                         raise KeyError(
                             f"Dataset '{dataset}' in training task {training_task.name} not found in dataset test cases. Ensure that all datasets match the name of a dataset test case."
                         )
                     dataset_fam.find_node(dataset_task) >> training_task
 
             for generate_config_task in [
-                task for task in inference_fam.all_tasks if isinstance(task, InferenceConfigTask)
+                task
+                for task in inference_fam.all_tasks
+                if isinstance(task, InferenceConfigTask)
             ]:
                 if not generate_config_task.required_trainings:
                     raise ValueError(
