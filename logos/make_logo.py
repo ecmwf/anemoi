@@ -151,16 +151,10 @@ def find_text(svg, ident):
 
 
 def main(argv=None):
-    p = argparse.ArgumentParser(
-        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
-    )
+    p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("text", help="sub-title string to render")
     p.add_argument("-o", "--output", help="output SVG (default: <text>.svg)")
-    p.add_argument(
-        "--white",
-        action="store_true",
-        help="render sub-title text in white (for dark mode)",
-    )
+    p.add_argument("--white", action="store_true", help="render sub-title text in white (for dark mode)")
     p.add_argument("--template", default=TEMPLATE)
     args = p.parse_args(argv)
 
@@ -187,10 +181,7 @@ def main(argv=None):
     out_path = args.output or f"{args.text}.svg"
     with open(out_path, "w", encoding="utf-8") as fh:
         fh.write(out_svg)
-    print(
-        f"wrote {out_path}: {args.text!r} centred on x={centre:.3f} (x={new_x:.4f})",
-        file=sys.stderr,
-    )
+    print(f"wrote {out_path}: {args.text!r} centred on x={centre:.3f} (x={new_x:.4f})", file=sys.stderr)
 
 
 if __name__ == "__main__":
