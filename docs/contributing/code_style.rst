@@ -15,15 +15,11 @@ follow these guidelines:
 
    -  Line length is 120 characters (not 79).
 
-   -  Uses ``black`` for consistent formatting.
-
-   -  Uses ``isort`` for import sorting with: - Single line imports. -
-      Black-compatible formatting. - Project imports grouped under
-      ``anemoi``.
+   -  Uses ``ruff format`` for consistent formatting.
 
 #. Import organization:
 
-   -  Imports are sorted using ``isort``.
+   -  Imports are sorted by ``ruff``.
    -  Force single-line imports.
    -  Group order: standard library, third-party, anemoi packages.
 
@@ -54,7 +50,7 @@ We use ``ruff`` for code linting, which checks for:
 
 All code is automatically checked using pre-commit hooks that verify:
 
-#. Code formatting: Black formatting. Import sorting. Line endings and
+#. Code formatting: ruff formatting. Import sorting. Line endings and
    trailing whitespace.
 #. Code quality: No debugger statements. No merge conflicts. Type
    annotations. No blanket ``noqa`` statements.
