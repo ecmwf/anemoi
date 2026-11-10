@@ -20,7 +20,6 @@ follow these guidelines:
 #. Import organization:
 
    -  Imports are sorted by ``ruff``.
-   -  Force single-line imports.
    -  Group order: standard library, third-party, anemoi packages.
 
 *********
