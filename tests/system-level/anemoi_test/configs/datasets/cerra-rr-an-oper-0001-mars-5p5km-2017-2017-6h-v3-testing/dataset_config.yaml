@@ -57,10 +57,12 @@ input:
             - tp
             - sf
             stream: oper
-    - rescale:
+    # CERRA tp is in kg m**-2, which equals mm of water. pint can't convert
+    # kg m**-2 to m directly, so treat it as mm to match the m used in AIFS.
+    - convert:
         param: tp
-        scale: 0.001
-        offset: 0.0
+        unit_in: mm
+        unit_out: m
 
   - constants:
       param:
