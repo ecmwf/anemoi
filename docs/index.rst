@@ -115,6 +115,12 @@ BibTeX:
 
 .. toctree::
    :maxdepth: 1
+   :caption: Anemoi Applications
+
+   applications/publications.rst
+
+.. toctree::
+   :maxdepth: 1
    :caption: Anemoi Package Documentation
 
    anemoi-datasets <https://anemoi.readthedocs.io/projects/datasets/>
